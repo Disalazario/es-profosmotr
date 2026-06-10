@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const ops = [
+  { title: 'Первичное оформление', text: 'Регистрация работника в системе ЛМК, медицинские осмотры по 302н/29н, фотография, бланки.' },
+  { title: 'Продление',             text: 'Напоминания за 30 дней. Электронная подача документов. Без визитов работника в медцентр.' },
+  { title: 'Передача в Роспотребнадзор', text: 'Автоматическая синхронизация с ЕИС «Электронная медицинская книжка». Без дублирующего ввода.' },
+  { title: 'Журнал работников',     text: 'Контроль сроков по каждому сотруднику и должности. Списки на продление и переаттестацию.' },
+  { title: 'Печатные формы',         text: 'Если работодатель требует — формируем PDF с QR-кодом для проверки подлинности.' },
+  { title: 'Аналитика',              text: 'Сводные отчёты по контрагентам, должностям, профессиям. Выгрузка для отдела кадров.' },
+];
+
+const sectors = [
+  { tag: 'Пищевая',         desc: 'Работники общепита, кухни, переработка пищевых продуктов' },
+  { tag: 'Торговля',        desc: 'Продавцы продуктовых магазинов, рынков, фермерских лавок' },
+  { tag: 'Образование',     desc: 'Воспитатели, учителя, повара школ и детсадов' },
+  { tag: 'Бытовые услуги',  desc: 'Парикмахеры, мастера маникюра, банщики, массажисты' },
+  { tag: 'Медицина',        desc: 'Медицинский персонал с обязательной ЛМК' },
+  { tag: 'Водный транспорт', desc: 'Экипажи судов, работники водозабора, бассейнов' },
+];
+---
+<BaseLayout title="Электронные медкнижки (ЭЛМК) — APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Услуги', href: '/#services' }, { label: 'Электронные медкнижки' }]}
+    kicker="§ 01 · Услуга · ЭЛМК"
+    title='Электронные <em class="not-italic" style="color: var(--brand-light);">медицинские книжки</em>'
+    dek="Оформляем, продлеваем и синхронизируем ЛМК работников с Роспотребнадзором. Полная замена бумажной книжки — без визитов в медцентр за каждой печатью."
+    badges={[
+      { label: 'СЭВМП Роспотребнадзор' },
+      { label: 'Приказ 29н', tone: 'muted' },
+      { label: 'QR-проверка', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Возможности */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Что закрывает услуга"
+        title="Полный цикл — от&nbsp;первой ЛМК до&nbsp;продления"
+        dek="Шесть операций, которые в обычной клинике делают вручную или через несколько программ."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {ops.map((w, i) => (
+          <article class="rounded-2xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3 inline-block" style="color: var(--brand-dark);">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{w.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Кому обязательно */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 03 · Кому обязательно"
+        title="Сферы, где требуется ЛМК"
+      />
+      <div class="rounded-2xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair-blue);">
+        <ul class="divide-y" style="border-color: var(--hair-blue);">
+          {sectors.map((s) => (
+            <li class="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-6 px-6 py-4 items-baseline">
+              <span class="display text-lg" style="color: var(--ink);">{s.tag}</span>
+              <span class="text-sm" style="color: var(--muted);">{s.desc}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <p class="mt-6 text-sm text-center" style="color: var(--muted);">
+        Полный перечень — в Приказе Минздрава №29н, приложение №2.
+      </p>
+    </div>
+  </section>
+
+  {/* §04 Чем лучше бумажной */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        kicker="§ 04 · Электронная vs бумажная"
+        title="Почему электронная книжка <em class='not-italic' style='color: var(--brand-light);'>удобнее</em>"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          { big: '3 дня',  text: 'на первичное оформление вместо 10–14 на бумаге' },
+          { big: '0',      text: 'визитов работника на переоформление' },
+          { big: '100%',   text: 'проверяется работодателем по QR-коду' },
+        ].map((s) => (
+          <div class="rounded-xl border p-6 text-center backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <div class="display text-4xl mb-2 bg-clip-text text-transparent tnum" style="background-image: linear-gradient(180deg, #fff 0%, var(--brand-light) 100%);">{s.big}</div>
+            <p class="text-sm" style="color: rgba(255,255,255,0.92);">{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 05 · Подключение"
+    title="Подключим оформление ЭЛМК за&nbsp;1&nbsp;день"
+    dek="Расскажем тарифы, обсудим интеграцию с вашим отделом кадров и согласуем порядок передачи документов."
+    ctaLabel="Запросить расчёт"
+  />
+</BaseLayout>

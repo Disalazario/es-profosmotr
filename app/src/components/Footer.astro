@@ -1,0 +1,108 @@
+---
+const cols = [
+  { title: 'Продукты', items: [
+    { label: 'МИС для профосмотров', href: '/#es-profosmotr' },
+    { label: 'МИС для клиник ↗',     href: 'https://www.easy-clinic.ru/', external: true },
+    { label: 'Все продукты →',        href: '/#products' },
+  ]},
+  { title: 'Функционал', items: [
+    { label: 'Регистраторам',  href: '/#roles' },
+    { label: 'Менеджерам',     href: '/#roles' },
+    { label: 'Руководителям',  href: '/#roles' },
+    { label: 'Врачам',         href: '/#roles' },
+  ]},
+  { title: 'Интеграции', items: [
+    { label: 'ЕГИСЗ / СЭМД',         href: '/#integrations' },
+    { label: 'Лаборатории',          href: '/#integrations' },
+    { label: 'Кассы и эквайринг',    href: '/#integrations' },
+    { label: 'Все интеграции →',     href: '/#integrations' },
+  ]},
+  { title: 'Услуги', items: [
+    { label: 'Аккредитация врачей',  href: '/licenzia' },
+    { label: 'Лицензирование клиник', href: '/licenziam' },
+    { label: 'МДЛП',                  href: '/kontrolpreparatov' },
+    { label: '«Честный знак»',        href: '/farmvirav' },
+    { label: 'Электронные медкнижки', href: '/services' },
+  ]},
+  { title: 'Компания', items: [
+    { label: 'Тарифы',         href: '/tarify' },
+    { label: 'Партнёрам',      href: '/partnership' },
+    { label: 'Блог',           href: '/blog' },
+    { label: 'О нас',          href: '/#about' },
+    { label: 'Оставить заявку', href: '/#contact' },
+  ]},
+];
+---
+<footer class="bg-slate-900 text-slate-400">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+
+    {/* Top: brand + columns */}
+    <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_3fr] gap-12">
+      {/* Brand */}
+      <div class="flex flex-col gap-4">
+        <a href="/" class="flex items-center gap-2" aria-label="ЭЙПИСМЕДИА — на главную">
+          <img src="/img/logo-white-nobg.png" alt="" aria-hidden="true" class="h-9 w-auto" />
+          <span class="text-white font-bold tracking-tight">«ЭЙПИСМЕДИА»</span>
+        </a>
+        <p class="text-sm text-slate-400 max-w-xs leading-relaxed">
+          МИС для профосмотров и&nbsp;передача СЭМД в&nbsp;ЕГИСЗ. Аккредитованная IT-компания, на&nbsp;рынке с&nbsp;2017&nbsp;года.
+        </p>
+        <div class="flex flex-col gap-2 mt-2">
+          <a href="tel:88006001318" class="text-white font-semibold hover:text-brand-300 transition">8 (800) 600-13-18</a>
+          <a href="mailto:info@apismedia.ru" class="text-sm text-slate-400 hover:text-white transition">info@apismedia.ru</a>
+        </div>
+      </div>
+
+      {/* Columns */}
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+        {cols.map((col) => (
+          <div>
+            <h4 class="text-white text-[13px] font-bold uppercase tracking-wider mb-4">{col.title}</h4>
+            <ul class="space-y-2">
+              {col.items.map((it) => (
+                <li>
+                  <a
+                    href={it.href}
+                    target={it.external ? '_blank' : null}
+                    rel={it.external ? 'noopener' : null}
+                    class="text-sm text-slate-400 hover:text-white transition"
+                  >
+                    {it.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Partner docs */}
+    <div class="mt-12 pt-8 border-t border-slate-800">
+      <h4 class="text-white text-[12px] font-bold uppercase tracking-wider mb-3">Документы для партнёров</h4>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <a href="#" class="text-slate-400 hover:text-white transition">Лицензионный договор ↗</a>
+        <a href="#" class="text-slate-400 hover:text-white transition">Карта партнёра ↗</a>
+      </div>
+    </div>
+
+    {/* Legal details */}
+    <div class="mt-12 pt-8 border-t border-slate-800 text-[12px] text-slate-500 leading-relaxed space-y-2">
+      <p class="text-slate-300">Общество с ограниченной ответственностью «ЭЙПИСМЕДИА»</p>
+      <p>ОГРН&nbsp;1171690068549 · ИНН&nbsp;1650351022 · КПП&nbsp;165001001</p>
+      <p>ОКВЭД&nbsp;62.01 — разработка компьютерного программного обеспечения</p>
+      <p>Юридический адрес: 423802, Республика&nbsp;Татарстан, г.&nbsp;Набережные&nbsp;Челны, ул.&nbsp;Столбовая, д.&nbsp;44, этаж&nbsp;1, помещ.&nbsp;3</p>
+    </div>
+  </div>
+
+  {/* Copyright */}
+  <div class="border-t border-slate-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between gap-3 text-[12px] text-slate-500">
+      <p>© 2026 ООО «ЭЙПИСМЕДИА». Все права защищены.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white transition">Политика конфиденциальности</a>
+        <a href="#" class="hover:text-white transition">Договор оферты</a>
+      </div>
+    </div>
+  </div>
+</footer>

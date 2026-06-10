@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const stages = [
+  { title: 'Аудит помещений',      text: 'Проверяем соответствие СанПиН и приказам Минздрава. Перечень несоответствий и план устранения.' },
+  { title: 'СОУТ и пожарная',     text: 'Спецоценка условий труда, пожарная безопасность, лицензия на работу с ИИ-средствами.' },
+  { title: 'Кадровый комплект',  text: 'Проверка дипломов и сертификатов специалистов, штатное расписание под профиль лицензии.' },
+  { title: 'Оборудование',         text: 'Перечень с инвентарными номерами, договоры обслуживания, поверка измерительных приборов.' },
+  { title: 'Пакет документов',     text: 'Учредительные документы, договоры аренды, должностные инструкции, журналы.' },
+  { title: 'Подача в Росздравнадзор', text: 'Отправляем заявление, оплачиваем госпошлину, сопровождаем выездную проверку.' },
+];
+
+const kinds = [
+  { tag: 'Медорганизации', desc: 'Поликлиники, медцентры, клиники, профилактории, санатории' },
+  { tag: 'Лаборатории',    desc: 'КДЛ, бактериологические, цитологические, гистологические' },
+  { tag: 'Аптеки',         desc: 'Аптеки готовых ЛС и производственные. С Honest sign и МДЛП.' },
+  { tag: 'Кабинеты',       desc: 'Стоматологические, косметологические, физиотерапевтические' },
+];
+---
+<BaseLayout title="Лицензирование медицинских организаций — APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Услуги', href: '/#services' }, { label: 'Лицензирование' }]}
+    kicker="§ 01 · Услуга · Юридическое сопровождение"
+    title='Лицензирование <em class="not-italic" style="color: var(--brand-light);">медорганизаций</em>, лабораторий и&nbsp;аптек'
+    dek="Полное сопровождение получения медицинской лицензии: аудит помещений, подготовка пакета документов, СОУТ, защита на выездной проверке Росздравнадзора."
+    badges={[
+      { label: '15+ лет в отрасли' },
+      { label: 'Срок 3–6 мес', tone: 'muted' },
+      { label: '152-ФЗ · 99-ФЗ', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Что делаем */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Что входит в сопровождение"
+        title="Полный цикл — от&nbsp;аудита до&nbsp;получения бумажной лицензии"
+        dek="Берём на себя 95% работы. От клиники нужны учредительные документы и доступ к помещениям."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {stages.map((w, i) => (
+          <article class="rounded-2xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3 inline-block" style="color: var(--brand-dark);">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{w.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Для кого */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 03 · Виды лицензий"
+        title="Готовим документы для&nbsp;любого профиля"
+      />
+      <div class="rounded-2xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair-blue);">
+        <ul class="divide-y" style="border-color: var(--hair-blue);">
+          {kinds.map((w) => (
+            <li class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-3 md:gap-6 px-6 py-4 items-baseline">
+              <span class="display text-lg" style="color: var(--ink);">{w.tag}</span>
+              <span class="text-sm" style="color: var(--muted);">{w.desc}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* §04 Сроки и стоимость */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        kicker="§ 04 · Сроки"
+        title="Сколько времени занимает"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          { big: '2–4 нед',  text: 'на сбор и оформление документов' },
+          { big: '30 дней',  text: 'проверка Росздравнадзора' },
+          { big: '3–6 мес',  text: 'общий срок до получения лицензии' },
+        ].map((s) => (
+          <div class="rounded-xl border p-6 text-center backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <div class="display text-4xl mb-2 bg-clip-text text-transparent tnum" style="background-image: linear-gradient(180deg, #fff 0%, var(--brand-light) 100%);">{s.big}</div>
+            <p class="text-sm" style="color: rgba(255,255,255,0.92);">{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 05 · Запросить расчёт"
+    title="Посчитаем под&nbsp;ваш профиль"
+    dek="Стоимость зависит от региона, числа помещений и видов услуг. Назовём порядок цифр за один звонок."
+    ctaLabel="Запросить расчёт"
+  />
+</BaseLayout>

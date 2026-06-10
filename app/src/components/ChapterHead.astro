@@ -1,0 +1,70 @@
+---
+/**
+ * ChapterHead — section header в редакторском синем стиле:
+ * [IsoCube 64×64 в рамке] | § NN · Метка
+ *                          | Большой ROOM-заголовок
+ *                          | Описание (опционально)
+ * ───────────────────────  (brand-dark линия)
+ *
+ * Props:
+ *  - kicker:  "§ 02 · Метка"   — обязательно
+ *  - title:   string           — обязательно
+ *  - dek:     string           — опционально, описание под заголовком
+ *  - tone:    'light' | 'dark' — белый текст для тёмных секций
+ *  - center:  boolean          — центрированная компоновка (без куба слева)
+ *  - cube:    boolean          — показывать ли куб (default true)
+ */
+
+interface Props {
+  kicker: string;
+  title: string;
+  dek?: string;
+  tone?: 'light' | 'dark';
+  center?: boolean;
+  cube?: boolean;
+}
+
+const { kicker, title, dek, tone = 'light', center = false, cube = true } = Astro.props;
+
+import IsoCube from './IsoCube.astro';
+
+const isDark = tone === 'dark';
+const inkColor = isDark ? '#fff' : 'var(--ink)';
+const mutedColor = isDark ? 'rgba(255,255,255,0.88)' : 'var(--muted)';
+const labelColor = isDark ? 'var(--brand-light)' : 'var(--brand-dark)';
+const ruleColor = isDark ? 'rgba(125,168,255,0.25)' : 'var(--brand-dark)';
+const cubeBg = isDark ? 'rgba(255,255,255,0.04)' : 'var(--surface)';
+const cubeBorder = isDark ? 'rgba(125,168,255,0.25)' : 'var(--hair-blue)';
+---
+
+{center ? (
+  <header class="text-center max-w-3xl mx-auto mb-12 pb-6" style={`border-bottom: 1px solid ${ruleColor};`}>
+    {cube && (
+      <div class="inline-flex items-center justify-center w-14 h-14 border p-2 mb-4 mx-auto" style={`background: ${cubeBg}; border-color: ${cubeBorder};`}>
+        <IsoCube shape="hex" size="sm" mode="draw" tone={isDark ? 'light' : 'brand'} />
+      </div>
+    )}
+    <span class="label block mb-3" style={`color: ${labelColor};`}>{kicker}</span>
+    <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-3" style={`color: ${inkColor};`}>
+      <Fragment set:html={title} />
+    </h2>
+    {dek && <p style={`color: ${mutedColor};`}>{dek}</p>}
+    <slot />
+  </header>
+) : (
+  <header class={cube ? "grid grid-cols-[64px_1fr] sm:grid-cols-[80px_1fr] gap-4 sm:gap-6 mb-12 pb-6 items-start" : "mb-12 pb-6"} style={`border-bottom: 1px solid ${ruleColor};`}>
+    {cube && (
+      <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center border p-2" style={`background: ${cubeBg}; border-color: ${cubeBorder};`}>
+        <IsoCube shape="hex" size="sm" mode="draw" tone={isDark ? 'light' : 'brand'} />
+      </div>
+    )}
+    <div class="max-w-3xl">
+      <span class="label block mb-3" style={`color: ${labelColor};`}>{kicker}</span>
+      <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-4" style={`color: ${inkColor};`}>
+        <Fragment set:html={title} />
+      </h2>
+      {dek && <p class="leading-relaxed" style={`color: ${mutedColor};`}>{dek}</p>}
+      <slot />
+    </div>
+  </header>
+)}

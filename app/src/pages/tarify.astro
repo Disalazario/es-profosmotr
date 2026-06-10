@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const tariffs = [
+  { name: 'Кабинет',        seats: '1–3',   priceFrom: 4900,  priceTo: 7900,  audience: 'Кабинеты и частные медицинские специалисты' },
+  { name: 'Клиника',        seats: '5–7',   priceFrom: 9900,  priceTo: 12900, audience: 'Небольшие клиники и медицинские центры' },
+  { name: 'Средний поток',  seats: '9–15',  priceFrom: 15900, priceTo: 21900, audience: 'Клиники со средним потоком пациентов' },
+  { name: 'Сеть',           seats: 'от 15', priceFrom: 25900, priceTo: null,  audience: 'Крупные и сетевые медицинские организации' },
+];
+
+const fmt = (n: number) => n.toLocaleString('ru-RU');
+
+const included = [
+  { label: 'Передача СЭМД в ЕГИСЗ',         value: 'Все 7 типов: 103, 204, 182, 183, 188, 228, 230, 196' },
+  { label: 'Подключение к РЭМД',            value: '0 ₽ — настройка шлюза, регистрация ОИДов' },
+  { label: 'Приказы',                        value: '29н от 28.01.2021, 201н от 14.04.2025' },
+  { label: 'Электронные медкарты',          value: 'Полный учёт пациентов, история, вложения, версионирование' },
+  { label: 'Шаблоны протоколов',            value: 'Для всех типов профосмотров и диспансеризации' },
+  { label: 'Маршрутизация осмотров',        value: 'По вредным факторам, полу, возрасту, должности' },
+  { label: 'Корпоративный кабинет',          value: 'Личный кабинет работодателя со статусом осмотров' },
+  { label: 'Интеграции',                     value: 'ИНВИТРО, Биомед, ПРОДОКТОРОВ, НАПОПРАВКУ, ЕГРЮЛ, мессенджеры' },
+  { label: 'Поддержка',                      value: 'Без ограничения по времени на срок договора' },
+  { label: 'Обновления',                     value: 'Включены, без доплат' },
+  { label: 'Аналитика и отчёты',            value: 'Дашборды, XLS/PDF, отчёты для Минздрава' },
+];
+
+const extras = [
+  { label: 'Модуль EasyClinic',              value: 'Амбулаторный приём, отдельная лицензия. Реестр Минцифры №13348' },
+  { label: 'Локальная установка',            value: '+30% к тарифу. Для тарифа «Сеть»' },
+  { label: 'Доработки под клинику',          value: 'По договору. Оценка работ — бесплатно' },
+  { label: 'Миграция данных',                value: 'С любой действующей МИС. Стоимость — по объёму' },
+  { label: 'Дополнительное обучение',        value: '8 000 ₽ за онлайн-сессию (до 10 человек, 2 часа)' },
+  { label: 'Нестандартное оборудование',    value: 'По запросу через REST API / HL7' },
+];
+
+const start = [
+  { label: 'Подключение к ЕГИСЗ',           value: '0 ₽ — полная настройка передачи СЭМД' },
+  { label: 'Передача СЭМД',                  value: '3 месяца бесплатно с момента подключения' },
+  { label: 'Работа в МИС',                   value: '1 месяц без оплаты, со всем функционалом' },
+  { label: 'Внедрение и настройка',          value: '3 вводных онлайн-обучения — включены' },
+  { label: 'Поддержка',                       value: 'Без ограничения на срок договора, без доплат' },
+];
+
+const faq = [
+  { q: 'Можно ли получить пробный период?', a: 'Да. Первый месяц МИС — бесплатно, со всем функционалом. Плюс 3 месяца бесплатной передачи СЭМД в ЕГИСЗ.' },
+  { q: 'Какие есть варианты установки?',    a: 'Доступно два варианта: 1) Локальный сервер — данные хранятся на вашем оборудовании в клинике, полный контроль и независимость от интернета. 2) Виртуальная машина в защищённом контуре — данные в нашем сертифицированном ЦОД на территории РФ, доступ через интернет. Локальная установка доступна для тарифа «Сеть».' },
+  { q: 'Что с 152-ФЗ и УЗ-2?',               a: 'Аттестованы по УЗ-2. Хранение — в аттестованном ЦОДе РФ. Шифрование, журналирование действий. Документы по запросу.' },
+  { q: 'Можно ли перейти с другой МИС?',    a: 'Да. Делаем миграцию данных с любой действующей системы. Срок — 1–2 недели параллельной работы.' },
+  { q: 'Кто платит за обновления?',          a: 'Обновления включены в стоимость на весь срок договора. Поправки Минздрава раскатываются всем клиентам в течение суток.' },
+];
+---
+<BaseLayout title="Тарифы на «ЕС-Профосмотр» — APIS Media" current="tarify"
+  description="Открытый прайс на МИС «ЕС-Профосмотр». 4 тарифа от 4 900 до 25 900 ₽/мес. Подключение к ЕГИСЗ — 0 ₽. 3 месяца передачи СЭМД — бесплатно.">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Тарифы' }]}
+    kicker="§ 01 · Прайс на МИС · v.4.2 · Октябрь 2025"
+    title='Тарифы на&nbsp;<em class="not-italic bg-clip-text text-transparent" style="background-image: linear-gradient(110deg, var(--brand-light) 0%, #fff 55%, var(--brand-light) 100%);">«ЕС-Профосмотр»</em>'
+    dek="Открытый прайс. Четыре тарифа в зависимости от количества рабочих мест. При любом тарифе — полный функционал системы. Подключение к ЕГИСЗ — 0 ₽. Первые 3 месяца передачи СЭМД — бесплатно."
+    badges={[
+      { label: 'Реестр Минцифры №17473' },
+      { label: '152-ФЗ · УЗ-2', tone: 'muted' },
+      { label: 'Приказы 29н · 201н', tone: 'muted' },
+      { label: 'РЭМД включена', tone: 'ok' },
+    ]}
+  />
+
+  {/* ════════ §02 Прайс-лист ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Прайс-лист"
+        title="Четыре тарифа"
+        dek="Все цены — на октябрь 2025. Диапазон цены отражает количество рабочих мест внутри тарифной группы. Для «Сети» — стоимость по индивидуальному расчёту."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {tariffs.map((t, i) => (
+          <article class={`rounded-2xl border p-8 flex flex-col ${i === 1 ? 'relative' : ''}`} style={`background: var(--surface); border-color: var(--hair-blue); ${i === 1 ? 'box-shadow: 0 12px 32px -12px rgba(33,103,224,0.25);' : ''}`}>
+            <div class="flex items-baseline justify-between gap-3 mb-2">
+              <h3 class="display text-2xl" style="color: var(--ink);">{t.name}</h3>
+              <span class="mono text-xs uppercase tracking-wider" style="color: var(--muted);">{t.seats} мест</span>
+            </div>
+            <p class="text-sm mb-6" style="color: var(--muted);">{t.audience}</p>
+            <div class="display mb-1 tnum" style="color: var(--brand-dark); font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1;">
+              {fmt(t.priceFrom)}{t.priceTo ? <span class="opacity-60"> — {fmt(t.priceTo)}</span> : ''}
+              <span class="text-base font-medium opacity-60 ml-1">{t.priceTo ? '' : '+'} ₽/мес</span>
+            </div>
+            <a href="#contact" class="mt-6 inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition" style="background: var(--brand-dark); color: #fff;">
+              Рассчитать под клинику →
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-8 rounded-xl border p-6 flex items-start gap-4" style="background: var(--paper-2); border-color: var(--hair-blue);">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" style="color: var(--brand-dark);">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M10 6v5M10 14h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <p class="text-sm leading-relaxed" style="color: var(--ink-2);">
+          <strong style="color: var(--brand-dark);">При любом тарифе</strong> — полный функционал системы: автоматизация по 29н/201н, передача СЭМД в РЭМД ЕГИСЗ, шаблоны заключений, маршруты осмотров, корпоративный кабинет, аналитика, все интеграции.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ §03 Что входит ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 03 · Включено в любой тариф"
+        title="Что вы получаете"
+      />
+      <div class="rounded-2xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair-blue);">
+        <ul class="divide-y" style="border-color: var(--hair-blue);">
+          {included.map((row) => (
+            <li class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-3 md:gap-6 px-6 py-4" style="border-color: var(--hair-blue);">
+              <span class="font-semibold text-sm" style="color: var(--ink);">{row.label}</span>
+              <span class="text-sm leading-relaxed" style="color: var(--muted);">{row.value}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ §04 Дополнительно ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 04 · Опционально"
+        title="Оплачивается отдельно"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {extras.map((row) => (
+          <div class="rounded-xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <h4 class="font-semibold mb-2" style="color: var(--ink);">{row.label}</h4>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{row.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ §05 Условия старта ════════ */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        kicker="§ 05 · Бонус при подключении"
+        title='Условия для&nbsp;<em class="not-italic" style="color: var(--brand-light);">новых клиентов</em>'
+        dek="Актуально при заключении договора до 31 декабря 2025 года."
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {start.map((row) => (
+          <div class="rounded-xl border p-6 backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <h4 class="font-semibold mb-2 text-white">{row.label}</h4>
+            <p class="text-sm leading-relaxed" style="color: rgba(255,255,255,0.92);">{row.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ §06 FAQ ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        center
+        kicker="§ 06 · FAQ"
+        title="Частые вопросы"
+        dek="Что важно знать перед подключением"
+      />
+      <div class="space-y-3 mt-12">
+        {faq.map((item, i) => (
+          <details class="faq rounded-xl border transition" style="background: var(--surface); border-color: var(--hair-blue);" open={i === 0}>
+            <summary class="flex items-center justify-between gap-4 px-6 py-4 font-semibold" style="color: var(--ink);">
+              <span>{item.q}</span>
+              <svg class="chev w-5 h-5 flex-shrink-0" viewBox="0 0 20 20" fill="none" style="color: var(--brand-dark);">
+                <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 pt-1 leading-relaxed" style="color: var(--muted);">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 07 · Расчёт под вашу клинику"
+    title="Получите точную стоимость за&nbsp;5&nbsp;минут"
+    dek="Расскажем про тарифные опции, обсудим интеграции и сроки внедрения. Без обязательств."
+  />
+</BaseLayout>

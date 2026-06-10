@@ -1,5 +1,29 @@
+# OS
 .DS_Store
+
+# Logs
 *.log
+
+# Dependencies / build artifacts
 node_modules/
-APIS media_(комплект ФС 14.07.20017)/
+dist/
+.astro/
+
+# Архивы / бэкапы — не нужно в репо
+*.zip
+*.7z
 prof-mo-redesign.html
+
+# Бренд-материалы — не публиковать
+APIS media_(комплект ФС 14.07.20017)/
+
+# Деплой-метаданные
+.netlify/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.production

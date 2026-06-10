@@ -1,0 +1,139 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  current?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'МИС «ЕС-Профосмотр» — автоматизация профосмотров и передача СЭМД в ЕГИСЗ/РЭМД. Реестр Минцифры №17473. 540+ клиник.',
+  current,
+  ogImage = '/img/logo-blue.png',
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
+
+// JSON-LD: organization + software (только на главной)
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'ЭЙПИСМЕДИА',
+  alternateName: ['ООО «ЭЙПИСМЕДИА»', 'APIS Media'],
+  url: 'https://prof-mo.site',
+  logo: new URL('/img/logo-blue.png', Astro.site).toString(),
+  foundingDate: '2017',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'ул. Столбовая, д. 44, эт. 1, пом. 3',
+    addressLocality: 'Набережные Челны',
+    addressRegion: 'Республика Татарстан',
+    postalCode: '423802',
+    addressCountry: 'RU',
+  },
+  contactPoint: [{
+    '@type': 'ContactPoint',
+    telephone: '+7-800-600-13-18',
+    contactType: 'sales',
+    areaServed: 'RU',
+    availableLanguage: ['Russian'],
+    hoursAvailable: 'Mo-Fr 08:00-17:00',
+  }],
+  taxID: '1650351022',
+  vatID: '1171690068549',
+};
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: '«ЕС-Профосмотр»',
+  description: 'Медицинская информационная система для профосмотров и передачи СЭМД в ЕГИСЗ/РЭМД.',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Medical Information System',
+  operatingSystem: 'Windows, Web',
+  offers: {
+    '@type': 'AggregateOffer',
+    lowPrice: '4900',
+    highPrice: '25900',
+    priceCurrency: 'RUB',
+    offerCount: '4',
+  },
+  publisher: { '@type': 'Organization', name: 'ЭЙПИСМЕДИА' },
+};
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#050d28" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  {/* Open Graph */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ЕС-Профосмотр" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+
+  {/* Fonts — self-hosted в /public/fonts/google/ */}
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/google/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/google/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" crossorigin />
+  <link rel="stylesheet" href="/fonts/google.css" />
+
+  {/* JSON-LD */}
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {isHome && <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />}
+</head>
+<body class="antialiased">
+  {/* Skip-to-content (a11y, WCAG 2.4.1) */}
+  <a href="#main" class="skip-link">Перейти к содержимому</a>
+
+  <Header current={current} />
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -64px;
+    left: 16px;
+    z-index: 1000;
+    padding: 12px 20px;
+    background: var(--brand-dark);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: top 200ms ease-out;
+  }
+  .skip-link:focus { top: 16px; outline: 2px solid var(--brand-light); outline-offset: 2px; }
+  main:focus { outline: 0; }
+</style>

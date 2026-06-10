@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const what = [
+  { title: 'Подача документов', text: 'Готовим и подаём пакет в Минздрав через ФРМР: трудовой стаж, документы об образовании, СНИЛС.' },
+  { title: 'Программы НМО',     text: 'Курсы повышения квалификации по специальности. Накопление зачётных единиц до 144 ЗЕТ.' },
+  { title: 'Подготовка к экзамену', text: 'Тестирование, оценочные средства, разбор практических задач. Тренировочные сессии.' },
+  { title: 'Сопровождение комиссии', text: 'Подача в аккредитационную подкомиссию. Помощь с записью и сроками этапов.' },
+  { title: 'Документы об аккредитации', text: 'Получение выписки из протокола. Внесение в ФРМР. Подтверждение работодателю.' },
+  { title: 'Сертификат не нужен',  text: 'С 2026 года сертификат специалиста заменяет свидетельство об аккредитации.' },
+];
+
+const who = [
+  { tag: 'Врачи общей практики', desc: 'Терапевты, педиатры, врачи общей практики' },
+  { tag: 'Узкие специалисты',     desc: 'Кардиологи, неврологи, хирурги, профпатологи и др.' },
+  { tag: 'Средний персонал',      desc: 'Медсёстры, фельдшеры, акушеры' },
+  { tag: 'Профпатологи',          desc: 'Подготовка к проведению профосмотров по 29н / 201н' },
+];
+---
+<BaseLayout title="Аккредитация врачей и среднего медперсонала — APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Услуги', href: '/#services' }, { label: 'Аккредитация врачей' }]}
+    kicker="§ 01 · Услуга · Образование"
+    title='Аккредитация врачей и&nbsp;<em class="not-italic" style="color: var(--brand-light);">среднего медперсонала</em>'
+    dek="Обучим врачей и специалистов под первичную и периодическую аккредитацию. Сопровождение от подачи документов до подтверждения работодателю."
+    badges={[
+      { label: 'Лицензия Рособрнадзора' },
+      { label: 'НМО · ФРМР', tone: 'muted' },
+      { label: 'ЗЕТ до 144', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Что входит */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Что входит в сопровождение"
+        title="Полный цикл — от документов до записи в&nbsp;ФРМР"
+        dek="Не оставляем врача один на один с регуляторикой. Каждый шаг сопровождает специалист."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {what.map((w, i) => (
+          <article class="rounded-2xl border p-6 transition" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3 inline-block" style="color: var(--brand-dark);">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{w.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Для кого */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 03 · Кому подойдёт"
+        title="Готовим к&nbsp;аккредитации всех профилей"
+      />
+      <div class="rounded-2xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair-blue);">
+        <ul class="divide-y" style="border-color: var(--hair-blue);">
+          {who.map((w) => (
+            <li class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-3 md:gap-6 px-6 py-4 items-baseline">
+              <span class="display text-lg" style="color: var(--ink);">{w.tag}</span>
+              <span class="text-sm" style="color: var(--muted);">{w.desc}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* §04 Как работаем */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        kicker="§ 04 · Этапы"
+        title="Четыре шага до&nbsp;свидетельства"
+      />
+      <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { num: '01', t: 'Консультация',     d: 'Определяем профиль и тип аккредитации (первичная / периодическая / специализированная).' },
+          { num: '02', t: 'Документы и НМО', d: 'Помогаем собрать пакет, подбираем недостающие курсы НМО. Зачёт ЗЕТ.' },
+          { num: '03', t: 'Подача',            d: 'Отправляем в аккредитационную подкомиссию. Контролируем сроки и статус.' },
+          { num: '04', t: 'Экзамен и&nbsp;выписка', d: 'Тренируем перед этапами. После экзамена — получаем выписку и вносим в ФРМР.' },
+        ].map((s) => (
+          <li class="rounded-xl border p-6 backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <span class="mono font-semibold mb-3 inline-block" style="color: var(--brand-light);">{s.num}</span>
+            <h4 class="display text-lg mb-2 text-white" set:html={s.t} />
+            <p class="text-sm leading-relaxed" style="color: rgba(255,255,255,0.92);">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 05 · Запросить условия"
+    title="Подберём программу под&nbsp;вашу специальность"
+    dek="Стоимость и сроки зависят от профиля, количества ЗЕТ и формы обучения. Расскажем за один звонок."
+    ctaLabel="Запросить расчёт"
+  />
+</BaseLayout>

@@ -1,0 +1,173 @@
+/* ════════════════════════════════════════════════════════════
+   DESIGN TOKENS · APIS Media brand
+   Источник палитры — официальный бренд-бук APIS Media (2017)
+   ════════════════════════════════════════════════════════════ */
+
+/* ---------- FONTS ---------- */
+@font-face { font-family: 'Room'; src: url('/fonts/room-bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Room'; src: url('/fonts/room-thin.ttf') format('truetype'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Circe'; src: url('/fonts/circe-regular.woff') format('woff'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Circe'; src: url('/fonts/circe-bold.woff') format('woff'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Circe'; src: url('/fonts/circe-extrabold.woff') format('woff'); font-weight: 800; font-display: swap; }
+
+:root {
+  /* ════════ BLUE SCALE — 10 шагов, выведенных из бренд-палитры APIS ════════
+     Опорные точки бренд-бука: 600 = #0542AC (тёмный), 500 = #2167E0 (светлый),
+     300 = #7DA8FF (голубой акцент). Остальные ступени строятся по этим трём. */
+  --blue-50:   #F0F5FF;
+  --blue-100:  #DCE7FF;
+  --blue-200:  #B8CFFF;
+  --blue-300:  #7DA8FF;   /* brand-light */
+  --blue-400:  #4A86F0;
+  --blue-500:  #2167E0;   /* brand-mid */
+  --blue-600:  #0542AC;   /* brand-dark */
+  --blue-700:  #0B1A3A;
+  --blue-800:  #060D1B;
+  --blue-900:  #03060E;
+
+  /* ── BRAND palette (алиасы для смыслового использования) ── */
+  --brand-dark:   var(--blue-600);
+  --brand-mid:    var(--blue-500);
+  --brand-light:  var(--blue-300);
+
+  /* ── Brand gradient base (для тёмных секций) ── */
+  --brand-deep-1: var(--blue-800);
+  --brand-deep-2: var(--blue-700);
+  --brand-deep-3: #122850;
+
+  /* Signature gradient — слайдер на 60% к светлой стороне (из бренд-бука) */
+  --brand-gradient: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-500) 60%, var(--blue-300) 100%);
+  --brand-gradient-deep: linear-gradient(165deg, var(--blue-800) 0%, var(--blue-700) 35%, var(--blue-600) 100%);
+  --brand-gradient-radial: radial-gradient(ellipse at 30% 20%, var(--blue-500) 0%, var(--blue-600) 35%, var(--blue-700) 70%, var(--blue-800) 100%);
+
+  /* ── SURFACES (полноценно синие) ── */
+  --paper:        #EAF1FE;           /* основной фон — насыщеннее blue-50 */
+  --paper-2:      #DCE7FF;           /* +1 ступень (== blue-100) */
+  --paper-3:      #C8D7FF;           /* +2 ступени */
+  --surface:      #F7F9FE;           /* «белые» карточки теперь холодно-голубые */
+  --surface-2:    #FFFFFF;           /* для редких чисто белых вставок */
+  --surface-tint: var(--blue-100);   /* подложки и hover */
+
+  /* Альтернирующие секционные фоны */
+  --section-a:    #EAF1FE;           /* основной */
+  --section-b:    #DCE7FF;           /* контрастный bluer */
+  --section-c:    #F7F9FE;           /* самый светлый */
+  --section-d:    var(--blue-800);   /* тёмный (контакт, футер) */
+
+  /* ── INK (на бумаге) — производные от blue-800, более синие ── */
+  --ink:          var(--blue-800);
+  --ink-2:        #15264D;           /* холодный navy */
+  --ink-3:        #2A4070;
+  --muted:        #4E6094;           /* холоднее, в синеву */
+  --muted-2:      #7A8DB8;
+  --muted-3:      var(--blue-200);
+
+  /* ── LINES (в синем спектре, более интенсивные) ── */
+  --rule:         var(--blue-700);                /* тяжёлая разделительная — стало холоднее */
+  --rule-blue:    var(--blue-600);                /* бренд-акцентная */
+  --hairline:     rgba(11,26,58,0.18);            /* волосок поверх бумаги, чуть темнее */
+  --hair-soft:    rgba(11,26,58,0.1);
+  --hair-blue:    rgba(33,103,224,0.28);          /* брендовый волосок, активнее */
+  --hair-light:   rgba(125,168,255,0.4);          /* акцентный голубой */
+
+  /* ── DARK theme (для тёмных секций) ──
+     Контраст подобран под WCAG AA: основной 0.92, муть 0.78 (≈ 4.5:1 на #060D1B) */
+  --ink-on-dark:    #FFFFFF;
+  --muted-on-dark:  rgba(255,255,255,0.85);
+  --muted2-on-dark: rgba(255,255,255,0.6);
+  --line-on-dark:   rgba(125,168,255,0.32);
+  --hair-on-dark:   rgba(125,168,255,0.18);
+
+  /* ── STATUS ── */
+  --ok:           #15803D;
+  --warn:         #C2410C;
+  --err:          #B91C1C;
+
+  /* ── TYPOGRAPHY ── */
+  --font-display: 'Room', 'Inter', system-ui, sans-serif;
+  --font-serif:   'Source Serif 4', 'Georgia', serif;
+  --font-body:    'Inter', 'Circe', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  /* Type scale — modular, fluid */
+  --fs-xs:    0.75rem;
+  --fs-sm:    0.875rem;
+  --fs-base:  1rem;
+  --fs-md:    1.0625rem;
+  --fs-lg:    1.25rem;
+  --fs-xl:    clamp(1.5rem, 2.4vw, 2rem);
+  --fs-2xl:   clamp(2rem, 3.6vw, 2.8rem);
+  --fs-3xl:   clamp(2.6rem, 5vw, 4rem);
+  --fs-4xl:   clamp(3.2rem, 7vw, 5.6rem);
+  --fs-5xl:   clamp(4rem, 9vw, 7.6rem);
+
+  /* ════════ SPACING — каноническая шкала ════════
+     Целевые значения, на которые нормализованы Tailwind-классы по проекту.
+     Allowed: p/m/gap/space-* = {1, 2, 3, 4, 6, 8, 12, 16, 20, 24}
+     Disallowed: половинные шаги (1.5, 2.5), а также 5, 7, 10 — округляем
+     в сторону ближайшего «нормального» (5→6, 7→8, 10→12, 1.5/2.5→2).
+
+     T-shirt алиасы для кастомного CSS (где Tailwind не подходит):
+        2xs=4   xs=8   sm=16   md=24   lg=48   xl=80                       */
+  --space-2xs: 4px;   /* tw: 1  — gap между иконкой и текстом, инсеты бейджей */
+  --space-xs:  8px;   /* tw: 2  — внутри групп кнопок, плотные интервалы     */
+  --space-sm:  16px;  /* tw: 4  — внутри карточки, связанные элементы        */
+  --space-md:  24px;  /* tw: 6  — между карточками, h→p, блоки секции        */
+  --space-lg:  48px;  /* tw: 12 — между подсекциями                          */
+  --space-xl:  80px;  /* tw: 20 — vertical padding секций                    */
+
+  /* Legacy --sp-* (НЕ использовать в новом коде, оставлены для совместимости) */
+  --sp-1: var(--space-2xs);
+  --sp-2: var(--space-xs);
+  --sp-3: 12px;
+  --sp-4: var(--space-sm);
+  --sp-5: var(--space-md);
+  --sp-6: 32px;
+  --sp-7: var(--space-lg);
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* ── LAYOUT ── */
+  --container: 1280px;
+  --container-narrow: 720px;     /* для редакционной колонки */
+  --gutter: 32px;
+  --header-h: 60px;
+  --masthead-h: 30px;
+
+  /* ── MOTION ── */
+  --ease: cubic-bezier(.65, 0, .35, 1);
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --t-fast: 150ms;
+  --t-base: 250ms;
+  --t-slow: 400ms;
+
+  /* ── ELEVATION (используется минимально, brutalist) ── */
+  --shadow-sm: 0 1px 2px rgba(6,13,27,0.04), 0 1px 3px rgba(6,13,27,0.06);
+  --shadow-md: 0 4px 12px rgba(6,13,27,0.06), 0 8px 24px rgba(6,13,27,0.05);
+
+  /* ── RADII (минимальные, brutalist) ── */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+
+  /* ════════ GEOMETRY — мотив изометрического куба APIS ════════ */
+  /* SVG-паттерн изометрической сетки, очень тонкий, для фоновых подложек */
+  --iso-grid: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 173.2' width='100' height='173.2'><g fill='none' stroke='%237DA8FF' stroke-width='0.6' stroke-opacity='0.18'><path d='M0 0 L100 57.7 M100 0 L0 57.7 M0 57.7 L0 115.5 M100 57.7 L100 115.5 M0 115.5 L100 173.2 M100 115.5 L0 173.2'/><path d='M50 28.85 L50 86.6 L50 144.4'/></g></svg>");
+  --iso-grid-strong: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 173.2' width='100' height='173.2'><g fill='none' stroke='%232167E0' stroke-width='0.8' stroke-opacity='0.28'><path d='M0 0 L100 57.7 M100 0 L0 57.7 M0 57.7 L0 115.5 M100 57.7 L100 115.5 M0 115.5 L100 173.2 M100 115.5 L0 173.2'/><path d='M50 28.85 L50 86.6 L50 144.4'/></g></svg>");
+
+  /* Точечная сетка (для тёмных секций) */
+  --dot-grid-dark: radial-gradient(circle at 1px 1px, rgba(125,168,255,0.18) 1px, transparent 0);
+
+  /* Универсальные размеры куба */
+  --cube-xs: 24px;
+  --cube-sm: 48px;
+  --cube-md: 96px;
+  --cube-lg: 200px;
+  --cube-xl: 400px;
+}
+
+/* ════════ UTILITY CLASSES для геометрии ════════ */
+.bg-iso        { background-image: var(--iso-grid); background-size: 80px 138.6px; }
+.bg-iso-strong { background-image: var(--iso-grid-strong); background-size: 80px 138.6px; }
+.bg-dots-dark  { background-image: var(--dot-grid-dark); background-size: 28px 28px; }

@@ -1,0 +1,411 @@
+---
+/**
+ * IsoCube — фирменный знак APIS Media (изометрический куб) как анимированный SVG.
+ *
+ * Геометрия повторяет mark из бренд-бука: внешний шестиугольный силуэт +
+ * внутренний Y-схождение в центр + 7 вершин.
+ *
+ * Props:
+ *  - size:     'xs' | 'sm' | 'md' | 'lg' | 'xl'  (по умолчанию md)
+ *  - mode:     'static' | 'draw' | 'orbit'        (поведение)
+ *  - tone:     'brand' | 'light' | 'dark' | 'mono' (цветовая схема)
+ *  - parallax: boolean — реагировать на курсор мыши
+ *  - delay:    number  — задержка анимации в мс
+ */
+
+interface Props {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  mode?: 'static' | 'draw' | 'orbit';
+  tone?: 'brand' | 'light' | 'dark' | 'mono';
+  shape?: 'hex' | 'cube' | 'solid' | 'cluster';
+  parallax?: boolean;
+  delay?: number;
+  class?: string;
+}
+
+const {
+  size = 'md',
+  mode = 'draw',
+  tone = 'brand',
+  shape = 'hex',
+  parallax = false,
+  delay = 0,
+  class: extraClass = '',
+} = Astro.props;
+
+const id = `iso-${Math.random().toString(36).slice(2, 9)}`;
+
+// — Кластер: 3 мини-куба в трефойл-композиции на 120°
+const clusterCubes = [
+  { cx:   0, cy: -50, s: 35 },   // верхний
+  { cx:  43, cy:  25, s: 35 },   // правый-нижний
+  { cx: -43, cy:  25, s: 35 },   // левый-нижний
+];
+// Координаты вершин hex/cube/solid (радиус 100, isometric)
+const V = { top:[0,-100], ur:[86.6,-50], lr:[86.6,50], bot:[0,100], ll:[-86.6,50], ul:[-86.6,-50], c:[0,0] };
+---
+<div
+  class={`iso iso--${size} iso--${mode} iso--${tone} iso--shape-${shape} ${parallax ? 'iso--parallax' : ''} ${extraClass}`}
+  data-iso-id={id}
+  style={`--iso-delay: ${delay}ms`}
+>
+  <svg viewBox="-120 -120 240 240" aria-hidden="true" focusable="false">
+    <defs>
+      {/* Бренд-градиент: 135°, #0542AC → #2167E0 (60%) → #7DA8FF — точно по APIS guide */}
+      {/* Три грани = три направления освещения. Полупрозрачно, чтобы wireframe доминировал. */}
+      <linearGradient id={`iso-top-${id}`} x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%"   stop-color="#7DA8FF" stop-opacity="0.55"/>
+        <stop offset="60%"  stop-color="#2167E0" stop-opacity="0.32"/>
+        <stop offset="100%" stop-color="#0542AC" stop-opacity="0.18"/>
+      </linearGradient>
+      <linearGradient id={`iso-right-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.42"/>
+        <stop offset="60%"  stop-color="#0542AC" stop-opacity="0.28"/>
+        <stop offset="100%" stop-color="#0542AC" stop-opacity="0.15"/>
+      </linearGradient>
+      <linearGradient id={`iso-left-${id}`} x1="100%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="#0542AC" stop-opacity="0.58"/>
+        <stop offset="60%"  stop-color="#0542AC" stop-opacity="0.38"/>
+        <stop offset="100%" stop-color="#2167E0" stop-opacity="0.22"/>
+      </linearGradient>
+    </defs>
+    <g class="iso__group">
+
+      {/* ═══ HEX — outer hex + Y + faces (логотип APIS, основной вариант) ═══ */}
+      {shape === 'hex' && (
+        <>
+          <path class="iso__face iso__face--top"   d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill={`url(#iso-top-${id})`} />
+          <path class="iso__face iso__face--right" d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill={`url(#iso-right-${id})`} />
+          <path class="iso__face iso__face--left"  d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill={`url(#iso-left-${id})`} />
+          <path class="iso__edge iso__edge--outer iso__edge--1" d="M0 -100 L86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--2" d="M86.6 -50 L86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--3" d="M86.6 50 L0 100" />
+          <path class="iso__edge iso__edge--outer iso__edge--4" d="M0 100 L-86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--5" d="M-86.6 50 L-86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--6" d="M-86.6 -50 L0 -100" />
+          <path class="iso__edge iso__edge--inner iso__edge--7" d="M0 0 L0 -100" />
+          <path class="iso__edge iso__edge--inner iso__edge--8" d="M0 0 L86.6 50" />
+          <path class="iso__edge iso__edge--inner iso__edge--9" d="M0 0 L-86.6 50" />
+          <circle class="iso__vert iso__vert--1" cx="0"     cy="-100" />
+          <circle class="iso__vert iso__vert--2" cx="86.6"  cy="-50"  />
+          <circle class="iso__vert iso__vert--3" cx="86.6"  cy="50"   />
+          <circle class="iso__vert iso__vert--4" cx="0"     cy="100"  />
+          <circle class="iso__vert iso__vert--5" cx="-86.6" cy="50"   />
+          <circle class="iso__vert iso__vert--6" cx="-86.6" cy="-50"  />
+          <circle class="iso__vert iso__vert--center" cx="0" cy="0"   />
+        </>
+      )}
+
+      {/* ═══ CUBE — полный wireframe 12 рёбер (3 задних — пунктиром) ═══ */}
+      {shape === 'cube' && (
+        <>
+          <path class="iso__face iso__face--top"   d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill={`url(#iso-top-${id})`} />
+          <path class="iso__face iso__face--right" d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill={`url(#iso-right-${id})`} />
+          <path class="iso__face iso__face--left"  d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill={`url(#iso-left-${id})`} />
+          <path class="iso__edge iso__edge--outer iso__edge--1" d="M0 -100 L86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--2" d="M86.6 -50 L86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--3" d="M86.6 50 L0 100" />
+          <path class="iso__edge iso__edge--outer iso__edge--4" d="M0 100 L-86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--5" d="M-86.6 50 L-86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--6" d="M-86.6 -50 L0 -100" />
+          <path class="iso__edge iso__edge--inner iso__edge--7" d="M0 0 L0 -100" />
+          <path class="iso__edge iso__edge--inner iso__edge--8" d="M0 0 L86.6 50" />
+          <path class="iso__edge iso__edge--inner iso__edge--9" d="M0 0 L-86.6 50" />
+          {/* 3 «задних» ребра — пунктир, более прозрачные */}
+          <path class="iso__edge iso__edge--hidden iso__edge--10" d="M0 0 L86.6 -50" />
+          <path class="iso__edge iso__edge--hidden iso__edge--11" d="M0 0 L-86.6 -50" />
+          <path class="iso__edge iso__edge--hidden iso__edge--12" d="M0 0 L0 100" />
+          <circle class="iso__vert iso__vert--1" cx="0"     cy="-100" />
+          <circle class="iso__vert iso__vert--2" cx="86.6"  cy="-50"  />
+          <circle class="iso__vert iso__vert--3" cx="86.6"  cy="50"   />
+          <circle class="iso__vert iso__vert--4" cx="0"     cy="100"  />
+          <circle class="iso__vert iso__vert--5" cx="-86.6" cy="50"   />
+          <circle class="iso__vert iso__vert--6" cx="-86.6" cy="-50"  />
+          <circle class="iso__vert iso__vert--center" cx="0" cy="0"   />
+        </>
+      )}
+
+      {/* ═══ SOLID — заливки доминируют, минимум линий ═══ */}
+      {shape === 'solid' && (
+        <>
+          <path class="iso__face iso__face--top   iso__face--solid" d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill={`url(#iso-top-${id})`} />
+          <path class="iso__face iso__face--right iso__face--solid" d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill={`url(#iso-right-${id})`} />
+          <path class="iso__face iso__face--left  iso__face--solid" d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill={`url(#iso-left-${id})`} />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--1" d="M0 -100 L86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--2" d="M86.6 -50 L86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--3" d="M86.6 50 L0 100" />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--4" d="M0 100 L-86.6 50" />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--5" d="M-86.6 50 L-86.6 -50" />
+          <path class="iso__edge iso__edge--outer iso__edge--solid iso__edge--6" d="M-86.6 -50 L0 -100" />
+          {/* Три внутренние границы между гранями — тонко */}
+          <path class="iso__edge iso__edge--seam iso__edge--7" d="M0 0 L0 -100" />
+          <path class="iso__edge iso__edge--seam iso__edge--8" d="M0 0 L86.6 50" />
+          <path class="iso__edge iso__edge--seam iso__edge--9" d="M0 0 L-86.6 50" />
+        </>
+      )}
+
+      {/* ═══ CLUSTER — 3 мини-куба в трефойл-расстановке на 120° ═══ */}
+      {shape === 'cluster' && clusterCubes.map(({cx, cy, s}, idx) => {
+        const h = s * 0.866, v = s * 0.5;
+        const T = `${cx},${cy-s}`, UR = `${cx+h},${cy-v}`, LR = `${cx+h},${cy+v}`,
+              B = `${cx},${cy+s}`, LL = `${cx-h},${cy+v}`, UL = `${cx-h},${cy-v}`,
+              C = `${cx},${cy}`;
+        const base = `iso__edge--${idx + 1}`; // распределение задержек
+        return (
+          <>
+            <path class="iso__face iso__face--top"   d={`M${T} L${UR} L${C} L${UL} Z`} fill={`url(#iso-top-${id})`} />
+            <path class="iso__face iso__face--right" d={`M${UR} L${LR} L${B} L${C} Z`} fill={`url(#iso-right-${id})`} />
+            <path class="iso__face iso__face--left"  d={`M${UL} L${C} L${B} L${LL} Z`} fill={`url(#iso-left-${id})`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${T} L${UR}`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${UR} L${LR}`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${LR} L${B}`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${B} L${LL}`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${LL} L${UL}`} />
+            <path class={`iso__edge iso__edge--outer iso__edge--cluster ${base}`} d={`M${UL} L${T}`} />
+            <path class={`iso__edge iso__edge--inner iso__edge--cluster ${base}`} d={`M${C} L${T}`} />
+            <path class={`iso__edge iso__edge--inner iso__edge--cluster ${base}`} d={`M${C} L${LR}`} />
+            <path class={`iso__edge iso__edge--inner iso__edge--cluster ${base}`} d={`M${C} L${LL}`} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx} cy={cy-s} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx+h} cy={cy-v} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx+h} cy={cy+v} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx} cy={cy+s} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx-h} cy={cy+v} />
+            <circle class={`iso__vert iso__vert--cluster ${base}`} cx={cx-h} cy={cy-v} />
+            <circle class="iso__vert iso__vert--cluster iso__vert--center-cluster" cx={cx} cy={cy} />
+          </>
+        );
+      })}
+    </g>
+    {mode === 'orbit' && (
+      <g class="iso__orbit">
+        {/* Вращение через SMIL — центр задан явно (0 0), не зависит от transform-box */}
+        <animateTransform
+          attributeName="transform"
+          attributeType="XML"
+          type="rotate"
+          from="0 0 0"
+          to="360 0 0"
+          dur="16s"
+          repeatCount="indefinite"
+        />
+        {/* частицы на радиусе ~112 от центра, 120° друг от друга */}
+        <circle class="iso__particle iso__particle--a" cx="112"  cy="0"   r="3" />
+        <circle class="iso__particle iso__particle--b" cx="-56"  cy="97"  r="2" />
+        <circle class="iso__particle iso__particle--c" cx="-56"  cy="-97" r="2.5" />
+      </g>
+    )}
+  </svg>
+</div>
+
+<style>
+  .iso { display: inline-block; line-height: 0; }
+  .iso svg { width: 100%; height: 100%; overflow: visible; }
+
+  /* sizes */
+  .iso--xs { width: var(--cube-xs); height: var(--cube-xs); }
+  .iso--sm { width: var(--cube-sm); height: var(--cube-sm); }
+  .iso--md { width: var(--cube-md); height: var(--cube-md); }
+  .iso--lg { width: var(--cube-lg); height: var(--cube-lg); }
+  .iso--xl { width: var(--cube-xl); height: var(--cube-xl); }
+
+  /* group — вращение строго вокруг собственного центра (fill-box + center) */
+  .iso__group { transform-box: fill-box; transform-origin: center; }
+
+  /* faces — 3 видимые грани, под линиями */
+  .iso__face {
+    stroke: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  /* в static-режиме грани сразу видны */
+  .iso--static .iso__face { opacity: 1; }
+  /* в draw/orbit — fade-in после сборки wireframe */
+  .iso--draw .iso__face,
+  .iso--orbit .iso__face {
+    animation: iso-face-in 0.9s ease forwards;
+    animation-delay: calc(var(--iso-delay, 0ms) + 1400ms);
+  }
+  @keyframes iso-face-in { to { opacity: 1; } }
+
+  /* mono — без заливок, чистый wireframe */
+  .iso--mono .iso__face { display: none; }
+  /* light-тон на тёмном фоне — слегка ярче */
+  .iso--light .iso__face { mix-blend-mode: screen; }
+
+  /* SOLID-форма — сильные заливки + тонкие линии (как настоящий 3D-объект) */
+  .iso--shape-solid .iso__face--solid {
+    /* Заливка переопределяется ниже через дополнительный градиент */
+    filter: brightness(1.25) saturate(1.15);
+  }
+  .iso__edge--solid { stroke-width: 2; }
+  .iso__edge--seam  {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    mix-blend-mode: overlay;
+  }
+
+  /* CUBE-форма — задние рёбра пунктиром, прозрачнее */
+  .iso__edge--hidden {
+    fill: none;
+    stroke: var(--blue-300);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 5 5 !important;
+    opacity: 0.45;
+  }
+
+  /* CLUSTER-форма — мини-кубы с уменьшенными штрихами */
+  .iso--shape-cluster .iso__edge--cluster { stroke-width: 2.2; }
+  .iso--shape-cluster .iso__vert--cluster { r: 2.5; }
+  .iso--shape-cluster .iso__vert--center-cluster { r: 2.5; fill: var(--blue-500); }
+
+  /* edges */
+  .iso__edge {
+    fill: none;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .iso__edge--outer { stroke: var(--blue-600); stroke-width: 4; }
+  .iso__edge--inner { stroke: var(--blue-300); stroke-width: 3; }
+
+  /* tones */
+  .iso--light .iso__edge--outer { stroke: var(--blue-300); }
+  .iso--light .iso__edge--inner { stroke: var(--blue-500); }
+  .iso--light .iso__vert        { fill:  var(--blue-300); }
+  .iso--light .iso__vert--center{ fill:  var(--blue-500); }
+
+  .iso--dark .iso__edge--outer  { stroke: var(--blue-800); }
+  .iso--dark .iso__edge--inner  { stroke: var(--blue-500); }
+  .iso--dark .iso__vert         { fill:  var(--blue-800); }
+  .iso--dark .iso__vert--center { fill:  var(--blue-500); }
+
+  .iso--mono .iso__edge--outer,
+  .iso--mono .iso__edge--inner  { stroke: currentColor; }
+  .iso--mono .iso__vert,
+  .iso--mono .iso__vert--center { fill:  currentColor; }
+
+  /* vertices — статика */
+  .iso__vert        { fill: var(--blue-600); r: 4.5; }
+  .iso__vert--center{ fill: var(--blue-300); r: 4.5; }
+
+  /* xs / sm — пропорционально меньше */
+  .iso--xs .iso__edge { stroke-width: 6; }
+  .iso--xs .iso__vert,
+  .iso--xs .iso__vert--center { r: 7; }
+  .iso--sm .iso__edge { stroke-width: 5; }
+  .iso--sm .iso__vert,
+  .iso--sm .iso__vert--center { r: 6; }
+
+  /* ════════ MODE: STATIC — мгновенно показан ════════ */
+  .iso--static .iso__edge { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .iso--static .iso__vert,
+  .iso--static .iso__vert--center { r: 4.5; }
+
+  /* ════════ BUILD-IN отрисовка (draw + orbit) ════════ */
+  .iso--draw  .iso__edge,
+  .iso--orbit .iso__edge {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: iso-draw 1.2s cubic-bezier(.65,0,.35,1) forwards;
+    animation-delay: var(--iso-delay, 0ms);
+  }
+  .iso--draw .iso__edge--1, .iso--orbit .iso__edge--1 { animation-delay: calc(var(--iso-delay,0ms) + 0ms); }
+  .iso--draw .iso__edge--2, .iso--orbit .iso__edge--2 { animation-delay: calc(var(--iso-delay,0ms) + 80ms); }
+  .iso--draw .iso__edge--3, .iso--orbit .iso__edge--3 { animation-delay: calc(var(--iso-delay,0ms) + 160ms); }
+  .iso--draw .iso__edge--4, .iso--orbit .iso__edge--4 { animation-delay: calc(var(--iso-delay,0ms) + 240ms); }
+  .iso--draw .iso__edge--5, .iso--orbit .iso__edge--5 { animation-delay: calc(var(--iso-delay,0ms) + 320ms); }
+  .iso--draw .iso__edge--6, .iso--orbit .iso__edge--6 { animation-delay: calc(var(--iso-delay,0ms) + 400ms); }
+  .iso--draw .iso__edge--7, .iso--orbit .iso__edge--7 { animation-delay: calc(var(--iso-delay,0ms) + 540ms); }
+  .iso--draw .iso__edge--8, .iso--orbit .iso__edge--8 { animation-delay: calc(var(--iso-delay,0ms) + 620ms); }
+  .iso--draw .iso__edge--9, .iso--orbit .iso__edge--9 { animation-delay: calc(var(--iso-delay,0ms) + 700ms); }
+
+  .iso--draw  .iso__vert,
+  .iso--orbit .iso__vert {
+    r: 0;
+    animation: iso-pop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay: calc(var(--iso-delay, 0ms) + 900ms);
+  }
+  .iso--draw .iso__vert--2, .iso--orbit .iso__vert--2 { animation-delay: calc(var(--iso-delay,0ms) + 950ms); }
+  .iso--draw .iso__vert--3, .iso--orbit .iso__vert--3 { animation-delay: calc(var(--iso-delay,0ms) + 1000ms); }
+  .iso--draw .iso__vert--4, .iso--orbit .iso__vert--4 { animation-delay: calc(var(--iso-delay,0ms) + 1050ms); }
+  .iso--draw .iso__vert--5, .iso--orbit .iso__vert--5 { animation-delay: calc(var(--iso-delay,0ms) + 1100ms); }
+  .iso--draw .iso__vert--6, .iso--orbit .iso__vert--6 { animation-delay: calc(var(--iso-delay,0ms) + 1150ms); }
+  .iso--draw  .iso__vert--center,
+  .iso--orbit .iso__vert--center {
+    r: 0;
+    animation: iso-pop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay: calc(var(--iso-delay, 0ms) + 1300ms);
+  }
+
+  @keyframes iso-draw { to { stroke-dashoffset: 0; } }
+  @keyframes iso-pop {
+    0%   { r: 0; }
+    60%  { r: 6.5; }
+    100% { r: 4.5; }
+  }
+
+  /* ════════ ПОСТОЯННОЕ ВРАЩЕНИЕ КУБА (только orbit-режим) ════════
+     Крутится вокруг центра viewBox. Стартует после сборки (~2с). */
+  .iso--orbit .iso__group {
+    animation: iso-spin 20s linear infinite;
+    animation-delay: calc(var(--iso-delay, 0ms) + 1900ms);
+  }
+  @keyframes iso-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ════════ ОРБИТАЛЬНЫЕ ЧАСТИЦЫ ════════
+     Вращение делает SMIL (<animateTransform> вокруг 0 0).
+     CSS отвечает только за плавное появление после сборки куба. */
+  .iso__orbit {
+    opacity: 0;
+    animation: iso-appear 0.8s ease forwards;
+    animation-delay: calc(var(--iso-delay, 0ms) + 1700ms);
+  }
+  .iso__particle { fill: var(--blue-300); filter: drop-shadow(0 0 5px var(--blue-300)); }
+  @keyframes iso-appear { to { opacity: 1; } }
+
+  /* ════════ Mouse parallax — наклон всего контейнера (не группы!) ════════
+     Применяется к .iso, чтобы не конфликтовать со спином .iso__group. */
+  .iso--parallax {
+    --tx: 0;
+    --ty: 0;
+    transform: perspective(800px) rotateY(calc(var(--tx, 0) * 1deg)) rotateX(calc(var(--ty, 0) * -1deg));
+    transition: transform 300ms ease-out;
+    transform-style: preserve-3d;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .iso__edge { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; animation: none !important; }
+    .iso__vert, .iso__vert--center { r: 4.5; animation: none !important; }
+    .iso__group, .iso__orbit { animation: none !important; }
+    .iso__orbit { opacity: 1; }
+    .iso__face  { opacity: 1; animation: none !important; }
+    .iso--parallax { transform: none !important; }
+  }
+</style>
+
+{parallax && (
+  <script is:inline define:vars={{ id }}>
+    (() => {
+      const el = document.querySelector(`[data-iso-id="${id}"]`);
+      if (!el) return;
+      const onMove = (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / window.innerWidth;
+        const dy = (e.clientY - cy) / window.innerHeight;
+        el.style.setProperty('--tx', String(dx * 4));
+        el.style.setProperty('--ty', String(dy * 4));
+      };
+      window.addEventListener('mousemove', onMove, { passive: true });
+    })();
+  </script>
+)}

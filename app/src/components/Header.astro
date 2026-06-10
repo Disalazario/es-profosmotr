@@ -1,0 +1,221 @@
+---
+const { current = '' } = Astro.props;
+
+// Главная навигация — три раздела с подменю
+const mainNav = [
+  {
+    key: 'products', label: 'Продукты',
+    items: [
+      { label: 'МИС для профосмотров', desc: 'Полный цикл медосмотров и заключений', href: '/#es-profosmotr' },
+      { label: 'МИС для клиник', desc: '«EasyClinic» — общая МИС для частных клиник', href: 'https://www.easy-clinic.ru/', external: true },
+      { label: 'Все продукты →', desc: '', href: '/#products' },
+    ],
+  },
+  {
+    key: 'functional', label: 'Функционал',
+    items: [
+      { label: 'Регистраторам и кассирам', desc: 'Карта пациента, услуги, касса 54-ФЗ', href: '/#roles' },
+      { label: 'Менеджерам',                desc: 'Прайсы, КП, реестры по контрагентам', href: '/#roles' },
+      { label: 'Руководителям',             desc: 'Кассовые отчёты, аналитика, документы', href: '/#roles' },
+      { label: 'Врачам и профпатологам',    desc: 'Шаблоны, СЭМД, маршрут пациента', href: '/#roles' },
+    ],
+  },
+  {
+    key: 'integrations', label: 'Интеграции',
+    items: [
+      { label: 'Интеграция с ЕГИСЗ',        desc: 'Передача СЭМД (103, 204, 230…) в РЭМД', href: '/#integrations' },
+      { label: 'Интеграция с лабораториями', desc: 'Ситилаб, Хеликс, КДЛ, Гемотест и др.', href: '/#integrations' },
+      { label: 'Интеграция с кассами',       desc: 'АТОЛ, эквайринг Сбер/Тинькофф, ОФД', href: '/#integrations' },
+      { label: 'Все интеграции →',           desc: '', href: '/#integrations' },
+    ],
+  },
+];
+
+// Вторичная строка
+const subNav = [
+  {
+    key: 'services', label: 'Услуги',
+    items: [
+      { label: 'Аккредитация врачей',    desc: 'Сопровождение и квалификация', href: '/licenzia' },
+      { label: 'Лицензирование клиник',  desc: 'Подготовка документов',         href: '/licenziam' },
+      { label: 'МДЛП',                   desc: 'Учёт препаратов и УПД-2',       href: '/kontrolpreparatov' },
+      { label: '«Честный знак»',         desc: 'Маркировка препаратов',          href: '/farmvirav' },
+      { label: 'Электронные медкнижки',  desc: 'Онлайн-ЛМК работников',          href: '/services' },
+    ],
+  },
+  { key: 'tarify',      label: 'Тарифы',     href: '/tarify' },
+  { key: 'partnership', label: 'Партнёрам',  href: '/partnership' },
+  { key: 'blog',        label: 'Блог',       href: '/blog' },
+  { key: 'about',       label: 'О нас',      href: '/#about' },
+];
+---
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    {/* Row 1: logo + main nav + tel + CTA + burger */}
+    <div class="flex items-center gap-4 h-16">
+      <a href="/" class="flex items-center gap-2 flex-shrink-0" aria-label="ЭЙПИСМЕДИА — на главную">
+        <img src="/img/logo-blue-nobg.png" alt="" aria-hidden="true" class="h-8 w-auto" />
+        <span class="hidden sm:flex flex-col leading-tight">
+          <span class="text-[15px] font-bold text-brand-600 tracking-tight">«ЭЙПИСМЕДИА»</span>
+          <span class="text-[11px] text-slate-500">МИС для медорганизаций</span>
+        </span>
+      </a>
+
+      {/* main nav — desktop */}
+      <nav class="hidden lg:flex items-center gap-1 ml-6" aria-label="Главная навигация">
+        {mainNav.map((group) => (
+          <div class="relative group" data-dropdown>
+            <button
+              type="button"
+              class="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-slate-700 hover:text-brand-600 rounded-md hover:bg-slate-50 transition"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              <span>{group.label}</span>
+              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 absolute left-0 top-full pt-2 z-50 transition-opacity" role="menu">
+              <div class="w-80 bg-white border border-slate-200 shadow-xl rounded-xl p-2">
+                {group.items.map((it) => (
+                  <a
+                    href={it.href}
+                    target={it.external ? '_blank' : null}
+                    rel={it.external ? 'noopener' : null}
+                    role="menuitem"
+                    class="flex flex-col gap-0.5 px-3 py-2 rounded-lg hover:bg-brand-50 group/item transition"
+                  >
+                    <span class="text-[14px] font-semibold text-slate-900 group-hover/item:text-brand-600">{it.label}</span>
+                    {it.desc && <span class="text-[12px] text-slate-500 leading-snug">{it.desc}</span>}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      <div class="ml-auto flex items-center gap-3">
+        <a href="tel:88006001318" class="hidden md:inline-flex text-[14px] font-semibold text-slate-900 tracking-tight hover:text-brand-600 transition">
+          8 (800) 600-13-18
+        </a>
+        <a
+          href="#contact"
+          class="cta-shimmer inline-flex items-center justify-center px-4 py-2 rounded-lg text-white text-[13px] font-semibold whitespace-nowrap"
+        >
+          Заказать звонок
+        </a>
+        <button
+          id="navBurger"
+          class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-md text-slate-700 hover:bg-slate-100"
+          aria-label="Меню"
+          aria-expanded="false"
+          aria-controls="navMobile"
+        >
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Row 2: secondary nav */}
+    <div class="hidden lg:flex items-center gap-1 h-11 border-t border-slate-100">
+      {subNav.map((group) => (
+        group.items ? (
+          <div class="relative group" data-dropdown>
+            <button
+              type="button"
+              class={`flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-md hover:bg-slate-50 transition ${current === group.key ? 'text-brand-600' : 'text-slate-600 hover:text-brand-600'}`}
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              <span>{group.label}</span>
+              <svg class="w-3 h-3 transition-transform group-hover:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 absolute left-0 top-full pt-2 z-50 transition-opacity" role="menu">
+              <div class="w-80 bg-white border border-slate-200 shadow-xl rounded-xl p-2">
+                {group.items.map((it) => (
+                  <a href={it.href} role="menuitem" class="flex flex-col gap-0.5 px-3 py-2 rounded-lg hover:bg-brand-50 group/item transition">
+                    <span class="text-[14px] font-semibold text-slate-900 group-hover/item:text-brand-600">{it.label}</span>
+                    {it.desc && <span class="text-[12px] text-slate-500 leading-snug">{it.desc}</span>}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <a href={group.href} class={`px-3 py-2 text-[13px] font-medium rounded-md hover:bg-slate-50 transition ${current === group.key ? 'text-brand-600' : 'text-slate-600 hover:text-brand-600'}`}>
+            {group.label}
+          </a>
+        )
+      ))}
+    </div>
+
+    {/* Mobile menu (off-canvas-ish) */}
+    <nav id="navMobile" class="lg:hidden hidden border-t border-slate-100 py-4 space-y-1" aria-label="Мобильное меню">
+      {[...mainNav, ...subNav].map((group) =>
+        group.items ? (
+          <details class="group">
+            <summary class="flex items-center justify-between px-2 py-2 rounded-md text-slate-700 font-semibold list-none cursor-pointer">
+              <span>{group.label}</span>
+              <svg class="w-4 h-4 group-open:rotate-180 transition" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            <div class="pl-3 mt-1 space-y-1 border-l border-slate-200">
+              {group.items.map((it) => (
+                <a href={it.href} class="block px-3 py-2 text-[14px] text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded">
+                  {it.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <a href={group.href} class="block px-2 py-2 text-slate-700 font-semibold hover:text-brand-600">{group.label}</a>
+        )
+      )}
+      <div class="pt-3 mt-3 border-t border-slate-100 flex flex-col gap-2 px-2">
+        <a href="tel:88006001318" class="font-semibold text-slate-900">8 (800) 600-13-18</a>
+        <a href="mailto:sales@apismedia.pro" class="text-slate-600 text-sm">sales@apismedia.pro</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    // Mobile burger toggle
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    if (burger && mobile) {
+      burger.addEventListener('click', () => {
+        const open = mobile.classList.toggle('hidden') ? 'false' : 'true';
+        burger.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Desktop dropdowns: sync aria-expanded with hover/focus state
+    document.querySelectorAll('[data-dropdown]').forEach((group) => {
+      const trigger = group.querySelector('[data-dropdown-trigger]');
+      if (!trigger) return;
+      const setOpen = (v) => trigger.setAttribute('aria-expanded', v ? 'true' : 'false');
+      group.addEventListener('mouseenter', () => setOpen(true));
+      group.addEventListener('mouseleave', () => setOpen(false));
+      group.addEventListener('focusin', () => setOpen(true));
+      group.addEventListener('focusout', (e) => {
+        if (!group.contains(e.relatedTarget)) setOpen(false);
+      });
+      // Escape closes (returns focus to trigger)
+      group.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { setOpen(false); trigger.focus(); }
+      });
+    });
+  })();
+</script>
