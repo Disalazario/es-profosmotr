@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const ops = [
+  { title: 'Приём поставок',     text: 'Сканирование транспортной упаковки, сверка с накладной, автоматический ввод в оборот.' },
+  { title: 'Перемещение',         text: 'Между точками хранения и аптечными пунктами. Полная история движения.' },
+  { title: 'Списание',            text: 'По чеку ККМ, по требованию, по сроку годности. Массовые операции одной кнопкой.' },
+  { title: 'Контроль сроков',     text: 'Уведомления за 30/60/90 дней. Автоматическое формирование списков для возврата.' },
+  { title: 'Инвентаризация',      text: 'Сверка фактических остатков по штрихкодам. Автоматическое выравнивание расхождений.' },
+  { title: 'Отчёты',              text: 'Книга учёта, движение по периодам, оборачиваемость по позициям. Выгрузка в XLS.' },
+];
+---
+<BaseLayout title="Программа МДЛП — мониторинг движения лекарств | APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Услуги', href: '/#services' }, { label: 'МДЛП' }]}
+    kicker="§ 01 · Программа · Контроль ЛС"
+    title='Программа <em class="not-italic" style="color: var(--brand-light);">«МДЛП»</em> — мониторинг движения лекарственных препаратов'
+    dek="Учёт препаратов в медцентре или аптеке: приём, перемещение, списание, контроль срока годности. Интеграция с системой «Честный знак» и Госмониторингом."
+    badges={[
+      { label: 'Интеграция Госмониторинг' },
+      { label: 'УПД-2', tone: 'muted' },
+      { label: 'Совместимо с ЧЗ', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Возможности */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Что закрывает программа"
+        title="Полный цикл — от&nbsp;поставки до&nbsp;списания"
+        dek="Шесть операций, которые в обычной аптеке делают вручную или через несколько программ."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {ops.map((w, i) => (
+          <article class="rounded-2xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3 inline-block" style="color: var(--brand-dark);">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{w.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Для кого */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead kicker="§ 03 · Кому нужно" title="Кому подходит" />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          { t: 'Аптеки при медцентрах',  d: 'Полный учёт ЛС в розничной и больничной аптеке.' },
+          { t: 'Медцентры с запасом ЛС', d: 'Контроль расходов, списание после процедур, сроки годности.' },
+          { t: 'Лаборатории',             d: 'Учёт реактивов и расходных материалов с маркировкой.' },
+        ].map((c) => (
+          <div class="rounded-xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <h4 class="display text-lg mb-2" style="color: var(--ink);">{c.t}</h4>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §04 Связка */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        center
+        kicker="§ 04 · Экосистема"
+        title='Работает в&nbsp;связке с&nbsp;<em class="not-italic" style="color: var(--brand-light);">«Честный знак»</em>'
+        dek="Одна точка управления для маркированных ЛС: и Госмониторинг, и МДЛП, и кассовые операции."
+      />
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {[
+          { tag: 'МДЛП',         t: 'Учёт оборота' },
+          { tag: 'Честный знак', t: 'Маркировка' },
+          { tag: 'ЕС-ПРОФ',      t: 'Касса 54-ФЗ' },
+        ].map((c) => (
+          <div class="rounded-xl border p-6 text-center backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <div class="mono text-xs uppercase tracking-wider mb-2" style="color: var(--brand-light);">{c.tag}</div>
+            <div class="display text-white text-xl">{c.t}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 05 · Подключение"
+    title="Подключим за&nbsp;1–2&nbsp;дня"
+    dek="Стоимость зависит от размера аптеки или медцентра. Рассчитаем за один звонок."
+    ctaLabel="Запросить расчёт"
+  />
+</BaseLayout>

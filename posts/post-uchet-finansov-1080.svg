@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <!-- ════════════════════════════════════════════════════════════
+       APIS Media — Square post 1080×1080
+       Тема: «Учёт финансов по контрагентам»
+       Бренд-имя крупнее, чем в базовом шаблоне.
+       ════════════════════════════════════════════════════════════ -->
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#060D1B"/>
+      <stop offset="35%"  stop-color="#0B1A3A"/>
+      <stop offset="100%" stop-color="#0542AC"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="100%" cy="0%" r="80%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#7DA8FF" fill-opacity="0.18"/>
+    </pattern>
+    <linearGradient id="cube-top" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#7DA8FF" stop-opacity="0.42"/>
+      <stop offset="60%"  stop-color="#2167E0" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="cube-right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="cube-left" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0542AC" stop-opacity="0.44"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0.16"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ─── Фон ─── -->
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+  <rect width="1080" height="1080" fill="url(#dots)" opacity="0.5"/>
+  <rect width="1080" height="1080" fill="url(#glow)"/>
+
+  <!-- ═══ Большой декоративный куб справа-снизу ═══ -->
+  <g id="DECORATIVE-CUBE" transform="translate(840, 780)">
+    <g transform="scale(2.8)">
+      <path d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill="url(#cube-top)"/>
+      <path d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill="url(#cube-right)"/>
+      <path d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill="url(#cube-left)"/>
+      <g fill="none" stroke="#7DA8FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <g fill="none" stroke="#7DA8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ═══ TOP BAR — крупный лого и название ═══ -->
+  <g id="TOP-BAR" transform="translate(0, 90)">
+
+    <!-- Лого-куб (scale 0.36 — крупнее, ~72px) -->
+    <g transform="translate(80, 0) scale(0.36)">
+      <g fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <g fill="none" stroke="#7DA8FF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+    </g>
+
+    <!-- БРЕНД-НАЗВАНИЕ — крупнее (52px вместо 26) -->
+    <text id="EDIT-BRAND-NAME" x="200" y="18" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="52" font-weight="800" letter-spacing="-0.5">ЭЙПИСМЕДИА</text>
+    <text id="EDIT-PRODUCT"    x="200" y="58" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="16" letter-spacing="2.5">ЕС-ПРОФОСМОТР · МИС</text>
+  </g>
+
+  <!-- ═══ TITLE BLOCK — основной заголовок ═══ -->
+  <g id="TITLE-BLOCK" transform="translate(80, 410)">
+
+    <!-- § рубрика -->
+    <text id="EDIT-KICKER" x="0" y="0" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="17" letter-spacing="2.5">§ 03 · РУКОВОДИТЕЛЮ</text>
+
+    <!-- Заголовок «Учёт финансов по контрагентам» — 2 строки -->
+    <text id="EDIT-TITLE" x="0" y="86" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="86" font-weight="700" letter-spacing="-2.5">
+      <tspan x="0" dy="0">Учёт финансов</tspan>
+      <tspan x="0" dy="100" fill="#7DA8FF">по&#160;контрагентам</tspan>
+    </text>
+
+    <!-- Подзаголовок -->
+    <text id="EDIT-DEK" x="0" y="330" fill="rgba(255,255,255,0.78)" font-family="Inter, sans-serif" font-size="24">
+      <tspan x="0" dy="0">Прайс-листы, КП, реестры и&#160;закрывающие</tspan>
+      <tspan x="0" dy="36">документы для&#160;корпоративных клиентов —</tspan>
+      <tspan x="0" dy="36">в&#160;одном окне.</tspan>
+    </text>
+  </g>
+
+  <!-- ═══ BOTTOM BAR ═══ -->
+  <line x1="80" y1="960" x2="1000" y2="960" stroke="#7DA8FF" stroke-opacity="0.22" stroke-width="1"/>
+
+  <text id="EDIT-URL"    x="80"   y="1010" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="20" font-weight="600" letter-spacing="0.6">prof-mo.site</text>
+  <text id="EDIT-FOOTER" x="1000" y="1010" text-anchor="end" fill="rgba(255,255,255,0.55)" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="1.6">APIS MEDIA · 2026</text>
+</svg>

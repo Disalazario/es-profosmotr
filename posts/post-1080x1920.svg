@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <!-- ════════════════════════════════════════════════════════════
+       APIS Media — Post template 1080×1920 (vertical / story)
+       Для Instagram Stories, Reels, TikTok, VK Clips
+       ════════════════════════════════════════════════════════════ -->
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#060D1B"/>
+      <stop offset="35%"  stop-color="#0B1A3A"/>
+      <stop offset="100%" stop-color="#0542AC"/>
+    </linearGradient>
+    <radialGradient id="glow-top" cx="50%" cy="0%" r="70%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#7DA8FF" fill-opacity="0.18"/>
+    </pattern>
+    <linearGradient id="cube-top" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#7DA8FF" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#2167E0" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="cube-right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="cube-left" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0542AC" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ─── Фон ─── -->
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <rect width="1080" height="1920" fill="url(#dots)" opacity="0.5"/>
+  <rect width="1080" height="1920" fill="url(#glow-top)"/>
+
+  <!-- ═══ TOP — лого по центру ═══ -->
+  <g id="TOP-BAR" transform="translate(540, 200)">
+    <!-- Mini cube logo (центрирован) -->
+    <g transform="translate(0, 0) scale(0.32)">
+      <g fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <g fill="none" stroke="#7DA8FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+    </g>
+
+    <text id="EDIT-BRAND-NAME" x="0" y="68" text-anchor="middle" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="28" font-weight="700" letter-spacing="0.5">ЭЙПИСМЕДИА</text>
+    <text id="EDIT-PRODUCT"    x="0" y="100" text-anchor="middle" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="2.5">ЕС-ПРОФОСМОТР · МИС</text>
+  </g>
+
+  <!-- ═══ TITLE BLOCK ═══ -->
+  <g id="TITLE-BLOCK" transform="translate(80, 540)">
+    <text id="EDIT-KICKER" x="460" y="0" text-anchor="middle" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="18" letter-spacing="2.5">§ 02 · РЕГУЛЯТОРИКА</text>
+
+    <text id="EDIT-TITLE" x="460" y="100" text-anchor="middle" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="90" font-weight="700" letter-spacing="-2.5">
+      <tspan x="460" dy="0">Профосмотры</tspan>
+      <tspan x="460" dy="106">по&#160;правилам</tspan>
+      <tspan x="460" dy="106" fill="#7DA8FF">2026&#160;года</tspan>
+    </text>
+
+    <text id="EDIT-DEK" x="460" y="450" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="Inter, sans-serif" font-size="26">
+      <tspan x="460" dy="0">Что меняется после ввода</tspan>
+      <tspan x="460" dy="40">приказа 201н от&#160;14.04.2025</tspan>
+    </text>
+  </g>
+
+  <!-- ═══ Большой декоративный куб (центр-низ) ═══ -->
+  <g id="DECORATIVE-CUBE" transform="translate(540, 1450)">
+    <g transform="scale(2.6)">
+      <path d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill="url(#cube-top)"/>
+      <path d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill="url(#cube-right)"/>
+      <path d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill="url(#cube-left)"/>
+      <g fill="none" stroke="#7DA8FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <g fill="none" stroke="#7DA8FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+      <g fill="#7DA8FF">
+        <circle cx="0"     cy="-100" r="4.5"/>
+        <circle cx="86.6"  cy="-50"  r="4.5"/>
+        <circle cx="86.6"  cy="50"   r="4.5"/>
+        <circle cx="0"     cy="100"  r="4.5"/>
+        <circle cx="-86.6" cy="50"   r="4.5"/>
+        <circle cx="-86.6" cy="-50"  r="4.5"/>
+        <circle cx="0"     cy="0"    r="4.5" fill="#FFFFFF"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ═══ BOTTOM CTA + URL ═══ -->
+  <line x1="80" y1="1780" x2="1000" y2="1780" stroke="#7DA8FF" stroke-opacity="0.25" stroke-width="1"/>
+
+  <text id="EDIT-URL"    x="540" y="1840" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="24" font-weight="600" letter-spacing="0.8">prof-mo.site</text>
+  <text id="EDIT-FOOTER" x="540" y="1880" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="1.8">APIS MEDIA · 2026</text>
+</svg>

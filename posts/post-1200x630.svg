@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- ════════════════════════════════════════════════════════════
+       APIS Media — Post template 1200×630
+       Для OG-images, Twitter/X, LinkedIn, блог-обложек
+       Редактируется в Figma / Illustrator / любом SVG-редакторе.
+       Текстовые элементы помечены id="EDIT-*" — ищите по этим id.
+       ════════════════════════════════════════════════════════════ -->
+
+  <defs>
+    <!-- Brand gradient (165°, как на сайте) -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#060D1B"/>
+      <stop offset="35%"  stop-color="#0B1A3A"/>
+      <stop offset="100%" stop-color="#0542AC"/>
+    </linearGradient>
+
+    <!-- Soft glow на правой стороне (как hero-blob) -->
+    <radialGradient id="glow" cx="80%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Точечная решётка (как .bg-dots-dark на сайте) -->
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#7DA8FF" fill-opacity="0.16"/>
+    </pattern>
+
+    <!-- Градиенты декоративного куба справа -->
+    <linearGradient id="cube-top" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#7DA8FF" stop-opacity="0.42"/>
+      <stop offset="60%"  stop-color="#2167E0" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.14"/>
+    </linearGradient>
+    <linearGradient id="cube-right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="cube-left" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0542AC" stop-opacity="0.44"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ─── Фон ─── -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)" opacity="0.55"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- ═══ Большой декоративный куб справа ═══ -->
+  <g id="DECORATIVE-CUBE" transform="translate(880, 280)">
+    <g transform="scale(2.4)">
+      <!-- 3 грани -->
+      <path d="M0 -100 L86.6 -50 L0 0 L-86.6 -50 Z" fill="url(#cube-top)"/>
+      <path d="M86.6 -50 L86.6 50 L0 100 L0 0 Z"    fill="url(#cube-right)"/>
+      <path d="M-86.6 -50 L0 0 L0 100 L-86.6 50 Z"  fill="url(#cube-left)"/>
+      <!-- 6 внешних рёбер -->
+      <g fill="none" stroke="#7DA8FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <!-- 3 внутренних Y -->
+      <g fill="none" stroke="#7DA8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ═══ TOP BAR — лого слева, мета справа ═══ -->
+  <g id="TOP-BAR" transform="translate(0, 60)">
+
+    <!-- Mini cube logo (32px высота) -->
+    <g transform="translate(60, 0) scale(0.18)">
+      <g fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 -100 L86.6 -50"/>
+        <path d="M86.6 -50 L86.6 50"/>
+        <path d="M86.6 50 L0 100"/>
+        <path d="M0 100 L-86.6 50"/>
+        <path d="M-86.6 50 L-86.6 -50"/>
+        <path d="M-86.6 -50 L0 -100"/>
+      </g>
+      <g fill="none" stroke="#7DA8FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M0 0 L0 -100"/>
+        <path d="M0 0 L86.6 50"/>
+        <path d="M0 0 L-86.6 50"/>
+      </g>
+    </g>
+
+    <!-- Текст бренда -->
+    <text id="EDIT-BRAND-NAME"  x="124" y="0"  fill="#FFFFFF" font-family="Inter, sans-serif" font-size="20" font-weight="700" letter-spacing="0.5">ЭЙПИСМЕДИА</text>
+    <text id="EDIT-PRODUCT"     x="124" y="22" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="1.5">ЕС-ПРОФОСМОТР · МИС</text>
+
+    <!-- Дата / выпуск справа -->
+    <text id="EDIT-META" x="1140" y="0" text-anchor="end" fill="rgba(255,255,255,0.6)" font-family="JetBrains Mono, monospace" font-size="12" letter-spacing="1.4">ВЫПУСК · ЯНВАРЬ 2026</text>
+  </g>
+
+  <!-- ═══ TITLE BLOCK ═══ -->
+  <g id="TITLE-BLOCK" transform="translate(60, 230)">
+
+    <!-- § рубрика -->
+    <text id="EDIT-KICKER" x="0" y="0" fill="#7DA8FF" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="1.8">§ 02 · РЕГУЛЯТОРИКА</text>
+
+    <!-- Заголовок (3 строки) -->
+    <text id="EDIT-TITLE" x="0" y="60" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5">
+      <tspan x="0" dy="0">Профосмотры по правилам</tspan>
+      <tspan x="0" dy="68">2026 года: что меняется</tspan>
+      <tspan x="0" dy="68" fill="#7DA8FF">после приказа 201н</tspan>
+    </text>
+
+    <!-- Подзаголовок -->
+    <text id="EDIT-DEK" x="0" y="300" fill="rgba(255,255,255,0.72)" font-family="Inter, sans-serif" font-size="18" font-weight="400">
+      <tspan x="0" dy="0">Разбираем новые требования к&#8201;форме заключений,</tspan>
+      <tspan x="0" dy="26">срокам передачи в&#8201;ЕГИСЗ и&#8201;кодам СЭМД.</tspan>
+    </text>
+  </g>
+
+  <!-- ═══ BOTTOM BAR ═══ -->
+  <line x1="60" y1="555" x2="1140" y2="555" stroke="#7DA8FF" stroke-opacity="0.2" stroke-width="1"/>
+
+  <text id="EDIT-URL"    x="60"   y="590" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600" letter-spacing="0.5">prof-mo.site</text>
+  <text id="EDIT-FOOTER" x="1140" y="590" text-anchor="end" fill="rgba(255,255,255,0.5)" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="1.4">APIS MEDIA · 2026</text>
+</svg>

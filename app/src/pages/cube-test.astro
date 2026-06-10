@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IsoCube from '../components/IsoCube.astro';
+import PageHero from '../components/PageHero.astro';
+
+const shapes = [
+  {
+    key: 'hex',
+    name: 'HEX',
+    title: 'Hexagonal cube',
+    desc: 'Основной знак APIS Media по бренд-буку: шестиугольный силуэт, внутренний «Y» от центра, три полупрозрачные грани с фирменным градиентом 135° (#0542AC → #2167E0 → #7DA8FF).',
+    use: 'Главная марка. Хедер, footer, hero-кубы. Все секции.',
+  },
+  {
+    key: 'cube',
+    name: 'CUBE',
+    title: 'Full wireframe',
+    desc: '9 видимых рёбер + 3 «задних» пунктиром. Полный 3D-каркас изометрического куба. Видны все 12 рёбер реального куба.',
+    use: 'Для технических разделов: документация, API, спецификации.',
+  },
+  {
+    key: 'solid',
+    name: 'SOLID',
+    title: 'Strong gradient gem',
+    desc: 'Доминируют градиентные заливки граней — куб читается как настоящий 3D-объект. Тонкие линии-стыки. Без точек-вершин.',
+    use: 'Премиум-акценты: hero-странички тарифов, партнёрки, награды.',
+  },
+  {
+    key: 'cluster',
+    name: 'CLUSTER',
+    title: 'Trefoil — 3 cubes',
+    desc: 'Три мини-куба в трефойл-расстановке на 120° друг от друга. Намекает на семейство продуктов APIS (ЕС-Профосмотр, EasyClinic, доп.&nbsp;модули).',
+    use: 'Страницы «О продуктах», экосистема, мульти-сервис разделы.',
+  },
+];
+---
+<BaseLayout title="Cube variants — APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Кубы — варианты' }]}
+    kicker="§ 00 · Дизайн-система · Фирменный знак"
+    title='Четыре варианта <em class="not-italic" style="color: var(--brand-light);">фирменной геометрии</em>'
+    dek="Базовый шестиугольный куб + три производных формы для разных контекстов. Все варианты используют один и тот же бренд-градиент, единую анимацию сборки и совместимы по тонам (brand / light / dark / mono)."
+    badges={[
+      { label: '4 формы' },
+      { label: '5 размеров', tone: 'muted' },
+      { label: '4 тона', tone: 'muted' },
+    ]}
+    showCube={false}
+  />
+
+  {/* ═══ Карточки каждой формы ═══ */}
+  {shapes.map((sh, i) => (
+    <section class={`py-16 sm:py-20 md:py-24 ${i % 2 === 0 ? '' : 'text-white'}`}
+             style={i % 2 === 0 ? 'background: var(--paper);' : 'background: var(--brand-gradient-deep);'}>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <header class="grid grid-cols-[80px_1fr] gap-6 mb-12 pb-6 items-start"
+                style={i % 2 === 0 ? 'border-bottom: 1px solid var(--brand-dark);' : 'border-bottom: 1px solid rgba(125,168,255,0.25);'}>
+          <div class="w-16 h-16 flex items-center justify-center border p-2"
+               style={i % 2 === 0
+                 ? 'background: var(--surface); border-color: var(--hair-blue);'
+                 : 'background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.3);'}>
+            <IsoCube size="sm" mode="static" tone={i % 2 === 0 ? 'brand' : 'light'} shape={sh.key as any} />
+          </div>
+          <div class="max-w-3xl">
+            <span class="label block mb-3"
+                  style={i % 2 === 0 ? 'color: var(--brand-dark);' : 'color: var(--brand-light);'}>
+              § 0{i + 2} · {sh.name}
+            </span>
+            <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-3"
+                style={i % 2 === 0 ? 'color: var(--ink);' : 'color: #fff;'}>
+              {sh.title}
+            </h2>
+            <p class="leading-relaxed"
+               style={i % 2 === 0 ? 'color: var(--muted);' : 'color: rgba(255,255,255,0.92);'}>
+              <Fragment set:html={sh.desc} />
+            </p>
+          </div>
+        </header>
+
+        {/* Размерная шкала: xs / sm / md / lg + большой образец */}
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 items-center">
+
+          <div class="rounded-2xl border p-8 flex items-center justify-center"
+               style={i % 2 === 0
+                 ? 'background: var(--surface); border-color: var(--hair-blue); min-height: 360px;'
+                 : 'background: rgba(255,255,255,0.04); border-color: rgba(125,168,255,0.25); min-height: 360px;'}>
+            <IsoCube size="lg" mode="orbit" tone={i % 2 === 0 ? 'brand' : 'light'} shape={sh.key as any} />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            {(['xs', 'sm', 'md', 'lg'] as const).map((s) => (
+              <div class="rounded-xl border p-4 flex flex-col items-center justify-center gap-3 aspect-square"
+                   style={i % 2 === 0
+                     ? 'background: var(--surface); border-color: var(--hair-blue);'
+                     : 'background: rgba(255,255,255,0.04); border-color: rgba(125,168,255,0.18);'}>
+                <IsoCube size={s} mode="static" tone={i % 2 === 0 ? 'brand' : 'light'} shape={sh.key as any} />
+                <span class="mono text-[10px] uppercase tracking-wider"
+                      style={i % 2 === 0 ? 'color: var(--muted);' : 'color: rgba(255,255,255,0.92);'}>
+                  size: {s}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p class="mt-6 text-sm" style={i % 2 === 0 ? 'color: var(--muted);' : 'color: rgba(255,255,255,0.85);'}>
+          <span class="mono uppercase tracking-wider mr-3"
+                style={i % 2 === 0 ? 'color: var(--brand-dark);' : 'color: var(--brand-light);'}>Когда применять</span>
+          {sh.use}
+        </p>
+
+        {/* Tone-варианты (только на светлой секции) */}
+        {i % 2 === 0 && (
+          <div class="mt-12 pt-6 border-t" style="border-color: var(--hair-blue);">
+            <h4 class="label mb-4" style="color: var(--brand-dark);">Тоны</h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {(['brand', 'light', 'dark', 'mono'] as const).map((t) => (
+                <div class="rounded-xl border p-6 flex flex-col items-center gap-3"
+                     style={t === 'light'
+                       ? 'background: var(--brand-deep-1); border-color: rgba(125,168,255,0.25);'
+                       : 'background: var(--surface); border-color: var(--hair-blue);'}>
+                  <IsoCube size="md" mode="static" tone={t} shape={sh.key as any} />
+                  <span class="mono text-[10px] uppercase tracking-wider"
+                        style={t === 'light' ? 'color: rgba(255,255,255,0.88);' : 'color: var(--muted);'}>
+                    tone: {t}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  {/* Использование в коде */}
+  <section class="py-16 sm:py-20" style="background: var(--paper-2); border-top: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <header class="mb-8">
+        <span class="label block mb-3" style="color: var(--brand-dark);">§ 06 · Применение</span>
+        <h2 class="display text-3xl mb-3" style="color: var(--ink);">Как подключить в коде</h2>
+        <p style="color: var(--muted);">
+          Все варианты подключаются одним компонентом — через&nbsp;<code style="background: var(--brand-100); color: var(--brand-dark); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono);">&lt;IsoCube shape="..." /&gt;</code>.
+        </p>
+      </header>
+
+      <pre class="rounded-xl border p-6 overflow-x-auto" style="background: var(--ink); color: var(--blue-100); border-color: var(--brand-dark); font-family: var(--font-mono); font-size: 13px; line-height: 1.6;"><code>{`---
+import IsoCube from '../components/IsoCube.astro';
+---
+
+<!-- Основной логотип APIS -->
+<IsoCube shape="hex" size="xl" mode="orbit" tone="light" />
+
+<!-- Полный 3D-каркас (12 рёбер) -->
+<IsoCube shape="cube" size="md" mode="draw" tone="brand" />
+
+<!-- Заливочный «гем» вариант -->
+<IsoCube shape="solid" size="lg" mode="static" tone="brand" />
+
+<!-- 3 мини-куба (для семейства продуктов) -->
+<IsoCube shape="cluster" size="md" mode="draw" tone="brand" />`}</code></pre>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="rounded-xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+          <h4 class="display text-lg mb-2" style="color: var(--ink);">Props</h4>
+          <ul class="space-y-2 text-sm mono" style="color: var(--ink-2);">
+            <li><b style="color: var(--brand-dark);">shape</b> — hex | cube | solid | cluster</li>
+            <li><b style="color: var(--brand-dark);">size</b> — xs | sm | md | lg | xl</li>
+            <li><b style="color: var(--brand-dark);">mode</b> — static | draw | orbit</li>
+            <li><b style="color: var(--brand-dark);">tone</b> — brand | light | dark | mono</li>
+            <li><b style="color: var(--brand-dark);">parallax</b> — boolean</li>
+            <li><b style="color: var(--brand-dark);">delay</b> — ms (для каскада)</li>
+          </ul>
+        </div>
+        <div class="rounded-xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+          <h4 class="display text-lg mb-2" style="color: var(--ink);">Рекомендации</h4>
+          <ul class="space-y-2 text-sm" style="color: var(--muted);">
+            <li>· <b>hex</b> — везде, где должен читаться сам логотип</li>
+            <li>· <b>cube</b> — в техдокументации и API-разделах</li>
+            <li>· <b>solid</b> — в hero премиум-страниц (тарифы, партнёрство)</li>
+            <li>· <b>cluster</b> — на странице «О продуктах»</li>
+            <li>· <b>mono</b> + <b>cluster</b> — для одноцветной печати</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

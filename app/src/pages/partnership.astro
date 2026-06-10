@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const formats = [
+  {
+    tag: 'F-01',
+    title: 'Классические рефералы',
+    text: 'Рекомендуете нас своим клиентам — получаете комиссию за каждое подключение. Минимальный порог входа, без обязательств.',
+    bullets: [
+      'Бонус 3 месяца использования платформы',
+      'Промо-материалы и брендированные презентации',
+      'Личный кабинет с трекингом заявок',
+      'Маркетинговая поддержка от нашей команды',
+    ],
+  },
+  {
+    tag: 'F-02',
+    title: 'Совместные проекты',
+    text: 'Партнёрство для агентств, маркетинговых студий и медицинских ассоциаций. Совместные вебинары, кейсы и кампании.',
+    bullets: [
+      'Co-marketing вебинары и публикации',
+      'Совместные кейсы для соцсетей и блогов',
+      'Выходы на отраслевые конференции',
+      'Прямой канал к менеджеру партнёрки',
+    ],
+  },
+  {
+    tag: 'F-03',
+    title: 'Интеграционные услуги',
+    text: 'Для IT-компаний, системных интеграторов и разработчиков медицинского ПО. Открытый API, документация, песочница.',
+    bullets: [
+      'Полная документация REST API',
+      'Песочница для разработки и тестов',
+      'Кастомные интеграции под клиентов',
+      'Совместная сертификация решений',
+    ],
+  },
+];
+
+const process = [
+  { num: '01', t: 'Заявка',         d: 'Свяжитесь с менеджером партнёрки. Расскажем условия, выберем формат сотрудничества.' },
+  { num: '02', t: 'Договор',         d: 'Подписываем партнёрское соглашение. Прозрачные условия комиссий и ответственности.' },
+  { num: '03', t: 'Онбординг',       d: 'Доступ к личному кабинету партнёра, маркетинг-материалы, техническое обучение.' },
+  { num: '04', t: 'Работа',          d: 'Приводите клиентов, получаете комиссии, расширяете услуги. Поддержка 24/7.' },
+];
+---
+<BaseLayout title="Партнёрская программа — APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Партнёрам' }]}
+    kicker="§ 01 · Партнёрство"
+    title='Партнёрская <em class="not-italic" style="color: var(--brand-light);">программа</em>'
+    dek="Три формата сотрудничества: рефералы, совместные проекты, интеграции. Маркетинговая поддержка, документация API, личный кабинет партнёра. С нами работают интеграторы, IT-компании, медицинские ассоциации и консультанты."
+    badges={[
+      { label: '3 формата', tone: 'muted' },
+      { label: 'Документация API' },
+      { label: 'Бонус 3 мес', tone: 'ok' },
+    ]}
+  />
+
+  {/* §02 Форматы */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Форматы сотрудничества"
+        title="Три способа работать вместе"
+        dek="Выберите формат, который подходит вашему бизнесу. Условия гибкие — обсуждаем индивидуально."
+      />
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {formats.map((f) => (
+          <article class="rounded-2xl border p-8 flex flex-col" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3" style="color: var(--brand-dark);">{f.tag}</span>
+            <h3 class="display text-2xl mb-3" style="color: var(--ink);">{f.title}</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color: var(--muted);">{f.text}</p>
+            <ul class="space-y-2 mt-auto">
+              {f.bullets.map((b) => (
+                <li class="flex gap-2 text-sm" style="color: var(--ink-2);">
+                  <span class="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style="background: var(--brand-mid);"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Кому подходит */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 03 · Кому подходит"
+        title="Профиль партнёра"
+      />
+      <div class="rounded-2xl border overflow-hidden" style="background: var(--surface); border-color: var(--hair-blue);">
+        <ul class="divide-y" style="border-color: var(--hair-blue);">
+          {[
+            { t: 'IT-интеграторы',         d: 'Системные интеграторы, которые внедряют медицинское ПО в клиниках' },
+            { t: 'Консультанты',           d: 'Эксперты по регуляторике, ЕГИСЗ, медицинским лицензиям' },
+            { t: 'Агентства',              d: 'Маркетинговые и digital-агентства, работающие с клиниками' },
+            { t: 'Профессиональные ассоциации', d: 'Сообщества врачей и медицинских организаций' },
+            { t: 'Разработчики',            d: 'Создают собственные решения для медицины и хотят интеграцию с МИС' },
+          ].map((w) => (
+            <li class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-3 md:gap-6 px-6 py-4 items-baseline">
+              <span class="display text-lg" style="color: var(--ink);">{w.t}</span>
+              <span class="text-sm" style="color: var(--muted);">{w.d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* §04 Как стать */}
+  <section class="py-16 sm:py-20 md:py-24 text-white" style="background: var(--brand-gradient-deep);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        tone="dark"
+        kicker="§ 04 · Этапы"
+        title="Четыре шага до&nbsp;первой комиссии"
+      />
+      <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {process.map((s) => (
+          <li class="rounded-xl border p-6 backdrop-blur-sm" style="background: rgba(255,255,255,0.05); border-color: rgba(125,168,255,0.25);">
+            <span class="mono font-semibold mb-3 inline-block" style="color: var(--brand-light);">{s.num}</span>
+            <h4 class="display text-lg mb-2 text-white">{s.t}</h4>
+            <p class="text-sm leading-relaxed" style="color: rgba(255,255,255,0.92);">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* §05 Документы */}
+  <section class="py-16 sm:py-20" style="background: var(--paper);">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 05 · Документы для партнёров"
+        title="Что мы предоставляем"
+        cube={false}
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="#" class="rounded-xl border p-6 flex items-center justify-between group transition" style="background: var(--surface); border-color: var(--hair-blue);">
+          <div>
+            <h4 class="font-semibold mb-1" style="color: var(--ink);">Лицензионный договор</h4>
+            <p class="text-sm" style="color: var(--muted);">Шаблон договора партнёра. PDF, 42 КБ.</p>
+          </div>
+          <span class="mono text-xl group-hover:translate-x-1 transition-transform" style="color: var(--brand-dark);">↗</span>
+        </a>
+        <a href="#" class="rounded-xl border p-6 flex items-center justify-between group transition" style="background: var(--surface); border-color: var(--hair-blue);">
+          <div>
+            <h4 class="font-semibold mb-1" style="color: var(--ink);">Карта партнёра</h4>
+            <p class="text-sm" style="color: var(--muted);">Подробное описание условий. PDF, 1.2 МБ.</p>
+          </div>
+          <span class="mono text-xl group-hover:translate-x-1 transition-transform" style="color: var(--brand-dark);">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 06 · Стать партнёром"
+    title="Поговорим о&nbsp;сотрудничестве"
+    dek="Расскажем условия, подберём формат, ответим на вопросы. Менеджер партнёрки — bm@apismedia.pro."
+    ctaLabel="Связаться с менеджером"
+    ctaHref="mailto:bm@apismedia.pro"
+  />
+</BaseLayout>

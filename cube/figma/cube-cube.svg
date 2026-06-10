@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-120 -120 240 240" width="400" height="400">
+  <defs>
+    <linearGradient id="top" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#7DA8FF" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#2167E0" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#2167E0" stop-opacity="0.42"/>
+      <stop offset="60%"  stop-color="#0542AC" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#0542AC" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="left" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0542AC" stop-opacity="0.58"/>
+      <stop offset="60%"  stop-color="#0542AC" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#2167E0" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+
+  <g id="APIS Cube - Full Wireframe">
+
+    <g id="Faces">
+      <path id="Top Face"   d="M 0 -100 L 86.6 -50 L 0 0 L -86.6 -50 Z" fill="url(#top)"/>
+      <path id="Right Face" d="M 86.6 -50 L 86.6 50 L 0 100 L 0 0 Z"    fill="url(#right)"/>
+      <path id="Left Face"  d="M -86.6 -50 L 0 0 L 0 100 L -86.6 50 Z"  fill="url(#left)"/>
+    </g>
+
+    <g id="Outer Edges" fill="none" stroke="#0542AC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path id="Edge 01" d="M 0 -100 L 86.6 -50"/>
+      <path id="Edge 02" d="M 86.6 -50 L 86.6 50"/>
+      <path id="Edge 03" d="M 86.6 50 L 0 100"/>
+      <path id="Edge 04" d="M 0 100 L -86.6 50"/>
+      <path id="Edge 05" d="M -86.6 50 L -86.6 -50"/>
+      <path id="Edge 06" d="M -86.6 -50 L 0 -100"/>
+    </g>
+
+    <g id="Inner Y" fill="none" stroke="#7DA8FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path id="Y Up"          d="M 0 0 L 0 -100"/>
+      <path id="Y Lower Right" d="M 0 0 L 86.6 50"/>
+      <path id="Y Lower Left"  d="M 0 0 L -86.6 50"/>
+    </g>
+
+    <g id="Hidden Back Edges" fill="none" stroke="#7DA8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 5" opacity="0.45">
+      <path id="Back Upper Right" d="M 0 0 L 86.6 -50"/>
+      <path id="Back Upper Left"  d="M 0 0 L -86.6 -50"/>
+      <path id="Back Bottom"      d="M 0 0 L 0 100"/>
+    </g>
+
+    <g id="Vertices" fill="#0542AC">
+      <circle id="V Top"         cx="0"     cy="-100" r="4.5"/>
+      <circle id="V Upper Right" cx="86.6"  cy="-50"  r="4.5"/>
+      <circle id="V Lower Right" cx="86.6"  cy="50"   r="4.5"/>
+      <circle id="V Bottom"      cx="0"     cy="100"  r="4.5"/>
+      <circle id="V Lower Left"  cx="-86.6" cy="50"   r="4.5"/>
+      <circle id="V Upper Left"  cx="-86.6" cy="-50"  r="4.5"/>
+      <circle id="V Center"      cx="0"     cy="0"    r="4.5" fill="#7DA8FF"/>
+    </g>
+
+  </g>
+</svg>

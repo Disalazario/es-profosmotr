@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const categories = [
+  { slug: 'all',         label: 'Все статьи',     count: 9 },
+  { slug: 'regulation',  label: 'Регуляторика',   count: 3 },
+  { slug: 'egisz',       label: 'ЕГИСЗ / СЭМД',   count: 3 },
+  { slug: 'cases',       label: 'Кейсы клиник',   count: 2 },
+  { slug: 'guides',      label: 'Гайды',          count: 1 },
+];
+
+const posts = [
+  {
+    cat: 'Регуляторика',
+    date: '12 / 2024',
+    read: '7 мин',
+    title: 'Профосмотры по правилам 2026 года',
+    excerpt: 'Что меняется в порядке проведения профосмотров после введения приказа 201н от 14.04.2025. Разбираем новые требования по форме заключений и срокам передачи в ЕГИСЗ.',
+    featured: true,
+  },
+  {
+    cat: 'ЕГИСЗ',
+    date: '10 / 2024',
+    read: '6 мин',
+    title: 'Ошибки при передаче СЭМД в ЕГИСЗ: как их избежать',
+    excerpt: 'Семь самых частых причин отбойников из РЭМД. Что делает наш валидатор на стороне платформы и почему за 1.24 млн документов в месяц мы держим 0 отбойников.',
+  },
+  {
+    cat: 'ЕГИСЗ',
+    date: '09 / 2024',
+    read: '8 мин',
+    title: 'РЭМД и СЭМД: что это и как внедрять',
+    excerpt: 'Пошаговый разбор архитектуры обмена документами с государственным реестром. Базовые понятия, схемы CDA, шлюзы, УКЭП и валидация.',
+  },
+  {
+    cat: 'Регуляторика',
+    date: '08 / 2024',
+    read: '5 мин',
+    title: 'Требования к передаче данных в ЕГИСЗ',
+    excerpt: 'Полный список того, что обязательно передавать в ЕГИСЗ по ФЗ-323. Кто проверяет, какие штрафы по ст. 13.11 КоАП, и почему 1 января 2026 — критическая дата.',
+  },
+  {
+    cat: 'Кейсы',
+    date: '07 / 2024',
+    read: '9 мин',
+    title: 'Кейс: МЦ «Здоровье+» — переход за 2 дня',
+    excerpt: 'Сеть из четырёх филиалов в СПб мигрировала с самописной МИС за два рабочих дня. Без отбойников, без потерь, без сокращений. Прямая речь главврача.',
+  },
+  {
+    cat: 'Регуляторика',
+    date: '06 / 2024',
+    read: '6 мин',
+    title: 'Приказ 29н: что должно быть в МИС',
+    excerpt: 'Разбираем требования к программному обеспечению для проведения предварительных и периодических медосмотров. Минимальный чек-лист для проверки лицензионного аудита.',
+  },
+  {
+    cat: 'Гайды',
+    date: '05 / 2024',
+    read: '10 мин',
+    title: 'Как выбрать МИС для профосмотров: 10 пунктов',
+    excerpt: 'Чек-лист главврача: что спрашивать у вендора, как проверить реестр Минцифры, какие красные флаги в коммерческих предложениях и почему «бесплатно навсегда» — обман.',
+  },
+  {
+    cat: 'ЕГИСЗ',
+    date: '04 / 2024',
+    read: '7 мин',
+    title: 'Виды СЭМД 2024: расширенный список',
+    excerpt: 'Полный реестр кодов СЭМД с пояснениями: 103, 204, 182, 183, 188, 228, 230, 196 — что куда и когда. Что в работе у Минздрава, какие ждать в 2025.',
+  },
+  {
+    cat: 'Кейсы',
+    date: '03 / 2024',
+    read: '8 мин',
+    title: 'Сеть в 12 филиалов: один центр управления',
+    excerpt: 'Как «ПрофМедОсмотр» объединил 12 точек в трёх регионах в единую систему. Прозрачные отчёты, единая база пациентов, никаких Excel-выгрузок.',
+  },
+];
+---
+<BaseLayout title="Журнал — APIS Media · Регуляторика, ЕГИСЗ, кейсы клиник">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Журнал' }]}
+    kicker="§ 00 · Журнал · Выпуск 2025"
+    title='Журнал о&nbsp;<em class="not-italic" style="color: var(--brand-light);">медицинской цифре</em>'
+    dek="Регулярные статьи о ЕГИСЗ, СЭМД, профосмотрах и регуляторике. Пишем для главврачей, IT-директоров клиник и юристов медицинских организаций. Без воды и маркетинга."
+    badges={[
+      { label: '47 статей' },
+      { label: 'Обновляется ежемесячно', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Фильтры категорий */}
+  <section class="py-12 sm:py-12 border-b" style="background: var(--paper); border-color: var(--brand-dark);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="label mr-3" style="color: var(--muted);">Фильтр:</span>
+        {categories.map((c, i) => (
+          <button
+            data-cat={c.slug}
+            class={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition ${i === 0 ? 'is-active' : ''}`}
+            style={i === 0
+              ? 'background: var(--brand-dark); color: #fff; border: 1px solid var(--brand-dark);'
+              : 'background: var(--surface); color: var(--ink-2); border: 1px solid var(--hair-blue);'}
+          >
+            {c.label}
+            <span class="mono text-xs opacity-60">{c.count}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Главная статья (featured) + сетка */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Featured */}
+      {posts.filter((p) => p.featured).map((p) => (
+        <article class="mb-12 rounded-2xl border overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_1.3fr]" style="background: var(--surface); border-color: var(--brand-dark);">
+          <div class="aspect-[16/10] lg:aspect-auto relative overflow-hidden" style="background: var(--brand-gradient-deep);">
+            <div class="bg-iso absolute inset-0 opacity-40" aria-hidden="true"></div>
+            <div class="absolute top-5 left-5 mono text-[11px] uppercase tracking-wider px-3 py-2 rounded-full" style="background: rgba(255,255,255,0.12); color: var(--brand-light); border: 1px solid rgba(125,168,255,0.32);">
+              Главная статья выпуска
+            </div>
+          </div>
+          <div class="p-8 lg:p-12 flex flex-col">
+            <div class="flex items-center gap-4 mb-4 text-xs mono uppercase tracking-wider" style="color: var(--muted);">
+              <span style="color: var(--brand-dark);">{p.cat}</span>
+              <span style="color: var(--muted-2);">·</span>
+              <span>{p.date}</span>
+              <span style="color: var(--muted-2);">·</span>
+              <span>{p.read}</span>
+            </div>
+            <h2 class="display text-3xl lg:text-4xl mb-4" style="color: var(--ink);">{p.title}</h2>
+            <p class="leading-relaxed mb-6" style="color: var(--muted);">{p.excerpt}</p>
+            <a href="#" class="inline-flex items-center gap-2 font-semibold mt-auto group" style="color: var(--brand-dark);">
+              Читать статью <span class="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+
+      <ChapterHead
+        kicker="§ 02 · Все статьи"
+        title="Из&nbsp;последнего архива"
+        cube={false}
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.filter((p) => !p.featured).map((p) => (
+          <article class="rounded-2xl border p-6 flex flex-col transition hover:shadow-md" style="background: var(--surface); border-color: var(--hair-blue);">
+            <div class="flex items-center justify-between gap-3 mb-3 pb-3 border-b" style="border-color: var(--hair-blue);">
+              <span class="mono text-xs font-semibold uppercase tracking-wider" style="color: var(--brand-dark);">{p.cat}</span>
+              <span class="mono text-xs" style="color: var(--muted);">{p.date}</span>
+            </div>
+            <h3 class="display text-lg mb-3 leading-snug" style="color: var(--ink);">{p.title}</h3>
+            <p class="text-sm leading-relaxed mb-6 flex-1" style="color: var(--muted);">{p.excerpt}</p>
+            <div class="flex items-center justify-between text-xs mono" style="color: var(--muted);">
+              <span>{p.read}</span>
+              <a href="#" class="font-semibold transition" style="color: var(--brand-dark);">Читать →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* Pagination placeholder */}
+      <div class="mt-12 flex items-center justify-center gap-2">
+        <button class="w-10 h-10 rounded-lg border flex items-center justify-center" style="background: var(--brand-dark); color: #fff; border-color: var(--brand-dark);">1</button>
+        <button class="w-10 h-10 rounded-lg border flex items-center justify-center transition" style="background: var(--surface); color: var(--ink); border-color: var(--hair-blue);">2</button>
+        <button class="w-10 h-10 rounded-lg border flex items-center justify-center transition" style="background: var(--surface); color: var(--ink); border-color: var(--hair-blue);">3</button>
+        <span class="px-2" style="color: var(--muted);">…</span>
+        <button class="w-10 h-10 rounded-lg border flex items-center justify-center transition" style="background: var(--surface); color: var(--ink); border-color: var(--hair-blue);">→</button>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 03 · Подписка"
+    title="Подпишитесь на&nbsp;<em class='not-italic' style='color: var(--brand-light);'>обновления журнала</em>"
+    dek="Раз в месяц присылаем письмом подборку новых статей — без рекламы и спама. Только содержательное."
+    ctaLabel="Подписаться"
+    ctaHref="#contact"
+  />
+
+  <script is:inline>
+    document.querySelectorAll('[data-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-cat]').forEach((b) => {
+          b.style.background = 'var(--surface)';
+          b.style.color = 'var(--ink-2)';
+          b.style.borderColor = 'var(--hair-blue)';
+        });
+        btn.style.background = 'var(--brand-dark)';
+        btn.style.color = '#fff';
+        btn.style.borderColor = 'var(--brand-dark)';
+      });
+    });
+  </script>
+</BaseLayout>

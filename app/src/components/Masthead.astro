@@ -1,0 +1,57 @@
+---
+// Тонкая полоса метаданных в самом верху — как у журнала
+---
+<div class="masthead">
+  <div class="masthead__inner">
+    <span class="masthead__cell"><b>ВЫПУСК</b> 2025</span>
+    <span class="masthead__cell masthead__cell--wide">МИС «ЕС-ПРОФОСМОТР» · APIS&nbsp;MEDIA</span>
+    <span class="masthead__cell">540+ КЛИНИК · РЕЕСТР МИНЦИФРЫ № 17473</span>
+    <span class="masthead__cell masthead__cell--live"><i class="masthead__pulse"></i> ЕГИСЗ ОНЛАЙН</span>
+  </div>
+</div>
+
+<style>
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    height: var(--masthead-h);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 110;
+    overflow: hidden;
+  }
+  .masthead__inner {
+    display: flex; align-items: center;
+    height: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    gap: var(--sp-6);
+  }
+  .masthead__cell {
+    display: inline-flex; align-items: center; gap: var(--sp-2);
+    color: rgba(255,255,255,0.92);
+    white-space: nowrap;
+  }
+  .masthead__cell b { color: #fff; font-weight: 600; }
+  .masthead__cell--wide { flex: 1; }
+  .masthead__cell--live { color: #fff; }
+  .masthead__pulse {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: #25D366;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #25D366;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+  @media (max-width: 900px) {
+    .masthead__cell:not(.masthead__cell--wide):not(.masthead__cell--live) { display: none; }
+  }
+</style>

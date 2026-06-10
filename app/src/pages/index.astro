@@ -1,0 +1,719 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IsoCube from '../components/IsoCube.astro';
+
+const heroFeatures = [
+  // Главное преимущество — ЕГИСЗ отдельным блоком
+  { title: 'Интеграция с ЕГИСЗ',       text: 'Передача СЭМД в РЭМД ЕГИСЗ напрямую из МИС', primary: true },
+  // Лаборатории и кассы — объединены в один пункт
+  { title: 'Лаборатории и кассы',      text: 'ИНВИТРО, Хеликс, КДЛ, Гемотест и онлайн-кассы по 54-ФЗ' },
+  // Доработки под клинику — отдельным пунктом
+  { title: 'Доработки под клинику',    text: 'Адаптация под процессы и особенности вашей медорганизации' },
+  // Шаблоны под актуальные приказы
+  { title: 'Приказы 29н и 201н',       text: 'Готовые шаблоны заключений, маршруты осмотров, СЭМД' },
+  // Варианты развёртывания
+  { title: 'Варианты установки',       text: 'Локальный сервер на ваших мощностях или защищённая виртуальная машина в нашем ЦОД' },
+  // Поддержка
+  { title: 'Справочная поддержка',     text: 'Вводное онлайн-обучение и помощь без ограничения по времени' },
+];
+
+const logos = [
+  'ИНВИТРО', 'Биомед', 'МЕДЕРИКА', 'Premier', 'АКОС', 'Wellness Clinic',
+  'Здоровье+', 'ПрофМед', 'МедХолдинг', 'СитиМед',
+];
+
+const products = [
+  {
+    key: 'es',
+    name: '«ЕС-ПРОФОСМОТР»',
+    role: 'МИС для профосмотров',
+    text: 'Автоматизация всего комплекса работ по предварительным и периодическим осмотрам сотрудников в соответствии с Приказами 29н от 28.01.2021 и 201н от 14.04.2025.',
+    headline: 'Что закрывает система',
+    bullets: [
+      'Документы и шаблоны осмотров, печать, автозаполнение',
+      'Расписание, карты пациентов, маршруты обследований',
+      'Учёт патологий, заключительные акты, отчёты по контрагентам',
+      'Предварительные, периодические, предрейсовые и предсменные осмотры',
+    ],
+    cta: { label: 'Подробнее о МИС →', href: '/#es-profosmotr' },
+    registry: '№17473',
+  },
+  {
+    key: 'ec',
+    name: '«EasyClinic»',
+    role: 'МИС для приёмов',
+    text: 'Удобный, функциональный и доступный инструмент для всех сотрудников клиники: ведение амбулаторного приёма, регистратура, лаборатория, отчёты.',
+    headline: 'Модули программы',
+    bullets: [
+      'Регистратура: расписание, запись пациентов, СМС-информирование',
+      'Приём врача: амбулаторная карта, шаблоны протоколов, МКБ-10',
+      'Лаборатория: бланки анализов, результаты, рассылка',
+      'Отчёты, ДМС, страховые компании, интеграция с ЕГИСЗ',
+    ],
+    cta: { label: 'Перейти на easy-clinic.ru ↗', href: 'https://www.easy-clinic.ru/', external: true },
+    registry: '№13348',
+  },
+];
+
+const integrations = [
+  {
+    title: 'Интеграция с ЕГИСЗ',
+    text: 'Передача структурированных электронных медицинских документов в РЭМД ЕГИСЗ напрямую из МИС.',
+    listTitle: 'Виды СЭМД — список дополняется',
+    items: [
+      { tag: '103', name: 'Заключение по результатам предварительного (периодического) МО' },
+      { tag: '204', name: 'Медицинское заключение' },
+      { tag: '182, 183', name: 'Обратный талон санаторно-курортной карты (для детей)' },
+      { tag: '188', name: 'Заключение о допуске на гос. или муниципальную службу' },
+      { tag: '228', name: 'Результаты профилактического МО / диспансеризации' },
+      { tag: '230', name: 'Медицинское заключение по МО для ЭМЛК' },
+      { tag: '196', name: 'Медицинская справка для поступления в вуз' },
+    ],
+    cta: 'Подробнее об интеграции →',
+  },
+  {
+    title: 'Интеграция с лабораториями',
+    text: 'Направления и результаты анализов внешних лабораторий приходят в карту пациента автоматически — без ручного ввода и бумажных бланков.',
+    listTitle: 'Подключаемые лаборатории',
+    items: [
+      { tag: 'Ситилаб',  name: 'Направления и результаты анализов' },
+      { tag: 'Хеликс',   name: 'Все типы лабораторных исследований' },
+      { tag: 'КДЛ',      name: 'Клинико-диагностические исследования' },
+      { tag: 'Гемотест', name: 'Анализы крови, биохимия, гормоны' },
+      { tag: 'Инвитро',  name: 'Широкий спектр лабораторных тестов' },
+      { tag: 'Литех',    name: 'ПЦР-тесты, инфекционная диагностика' },
+    ],
+    cta: 'Подробнее о лабораториях →',
+  },
+  {
+    title: 'Интеграция с кассами',
+    text: 'Онлайн-кассы по 54-ФЗ, эквайринг и ОФД — прямо из МИС, без отдельной кассовой программы. Чеки формируются автоматически при оплате услуги.',
+    listTitle: 'Что подключаем',
+    items: [
+      { tag: 'АТОЛ',            name: 'Облачные онлайн-кассы по 54-ФЗ' },
+      { tag: 'Касса Ethernet',  name: 'Любой фискальный регистратор по сети' },
+      { tag: 'Эквайринг',       name: 'Сбер, Тинькофф, СБП, оплата картой и по QR' },
+    ],
+    cta: 'Подробнее о кассах →',
+  },
+];
+
+const roles = [
+  { name: 'Регистратор и кассир', text: 'Регистратура, касса 54-ФЗ, эквайринг и работа с контрагентами. Полный фронт-офис в одном окне.',
+    items: ['Создание карты пациента','Оформление услуг по прайсу контрагента','Касса и эквайринг','Печать документов и согласий','Запись на приём, SMS-напоминания'] },
+  { name: 'Менеджер', text: 'Договорная работа: КП, прайсы, реестры и закрывающие документы для корпоративных клиентов.',
+    items: ['Прайс-листы по контрагентам','Конструктор коммерческих предложений','Выгрузка реестров и актов','Интеграция с ЕГРЮЛ / ЕГРИП','Загрузка списков сотрудников'] },
+  { name: 'Руководитель', text: 'Аналитика, кассовые отчёты, документы для надзорных. Контроль клиники в реальном времени.',
+    items: ['Отчёты по контрагентам','Отчёты по сотрудникам','Кассовые отчёты и эквайринг','Заключительные акты, справки','Документы для налоговой'] },
+  { name: 'Врач и профпатолог', text: 'Шаблоны осмотров по 29н/201н, автозаполнение, маршрут пациента и СЭМД из карты приёма.',
+    items: ['Шаблоны осмотров (29н, 201н)','Автозаполнение документов','Учёт патологий и допуска','Создание СЭМД (103, 196, 204, 230…)','Печать и подпись УКЭП'] },
+];
+
+const extras = [
+  { name: 'Аккредитация врачей',         text: 'Обучим врачей и средний медицинский персонал.', href: '/licenzia' },
+  { name: 'Программа «Честный знак»',    text: 'Позволяет быстро проверять коды маркировки, списывать массово и выравнивать остатки.', href: '/farmvirav' },
+  { name: 'Лицензирование мед. учреждений', text: 'Поможем с получением лицензии медицинских организаций, лабораторий, аптек.', href: '/licenziam' },
+  { name: 'Программа «МДЛП»',            text: 'Позволяет контролировать срок годности, отслеживать движение и остатки товара, упрощает списание лекарств.', href: '/kontrolpreparatov' },
+];
+
+const faq = [
+  { q: 'Сколько стоит подключение к «ЕС-Профосмотр»?',           a: 'Тариф зависит от размера клиники и выбранных модулей. Передача СЭМД в ЕГИСЗ — первые 3 месяца бесплатно при подключении. Точную стоимость рассчитаем за 5 минут — оставьте заявку.' },
+  { q: 'Подходит ли система частной клинике?',                     a: 'Да. «ЕС-Профосмотр» изначально создан под коммерческие медицинские центры. Все обязательные требования к передаче в ЕГИСЗ закрыты, отчётность для собственника встроена.' },
+  { q: 'Какие виды СЭМД передаются в РЭМД ЕГИСЗ?',                 a: 'На текущий момент система формирует и отправляет 8 видов СЭМД: 103 (мед. заключение по результатам предварительного/периодического МО), 204 (мед. заключение), 182, 183 (обратный талон СКК для детей), 188 (заключение о допуске на гос./мун. службу), 228 (профилактический МО / диспансеризация), 230 (мед. заключение по МО для ЭМЛК), 196 (мед. справка для поступления в вуз). Список дополняется.' },
+  { q: 'С какими внешними системами интегрируется «ЕС-Профосмотр»?', a: 'Интеграция с ЕГИСЗ (передача СЭМД в РЭМД), лабораториями (передача заявок и получение результатов), базой ЕГРЮЛ, мессенджерами (SMS пациентам), сайтом клиники и агрегаторами расписания. Подключение к 1С и другим внутренним системам — по индивидуальному запросу.' },
+  { q: 'Безопасны ли данные пациентов?',                            a: 'Соответствие 152-ФЗ. Серверы в РФ. Шифрование при хранении и передаче. Ролевая модель доступа с журналом действий пользователей.' },
+];
+
+// Маленький helper для повторяющегося section-head с IsoCube + §
+---
+<BaseLayout title="«ЕС-Профосмотр» — МИС для профосмотров и передача СЭМД в ЕГИСЗ">
+
+  {/* ════════ HERO — dark brand gradient, IsoCube, editorial typography ════════ */}
+  <section class="relative overflow-hidden text-white" style="background: var(--brand-gradient-deep);">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="blob-a absolute -top-32 -left-32 w-96 h-96 rounded-full" style="background: radial-gradient(circle, rgba(33,103,224,0.5), transparent 70%); filter: blur(60px);"></div>
+      <div class="blob-b absolute top-20 -right-20 w-[28rem] h-[28rem] rounded-full" style="background: radial-gradient(circle, rgba(125,168,255,0.35), transparent 70%); filter: blur(80px);"></div>
+      <div class="blob-c absolute bottom-0 left-1/3 w-80 h-80 rounded-full" style="background: radial-gradient(circle, rgba(46,115,238,0.3), transparent 70%); filter: blur(60px);"></div>
+      <div class="bg-iso absolute inset-0 opacity-30" style="-webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 60%); mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 60%);"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-12 pb-20 sm:pt-16 sm:pb-24 md:pt-20 md:pb-28 lg:pt-24 lg:pb-32 text-center">
+
+      {/* Брендовый куб APIS — фоновый watermark СТРОГО по центру относительно контента */}
+      <div
+        class="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+        aria-hidden="true"
+        style="--cube-xl: 560px;"
+      >
+        <div class="opacity-[0.22] w-fit h-fit" style="filter: blur(0.4px);">
+          <IsoCube shape="hex" size="xl" mode="orbit" tone="light" />
+        </div>
+      </div>
+
+      <h1 class="display text-white mx-auto relative z-10" style="font-size: clamp(2rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.03em;">
+        <span class="block">Медицинская информационная&nbsp;система</span>
+        <em class="not-italic block mt-3 bg-clip-text text-transparent" style="background-image: linear-gradient(110deg, var(--brand-light) 0%, #fff 55%, var(--brand-light) 100%);">«ЕС-ПРОФОСМОТР»</em>
+      </h1>
+
+      <p class="text-lg sm:text-xl leading-relaxed mx-auto mt-8 max-w-2xl" style="color: rgba(255,255,255,0.82);">
+        Автоматизация медицинского учреждения и&nbsp;передача данных в&nbsp;ЕГИСЗ.
+      </p>
+
+      {/* Кнопки в grid 2×: каждая кнопка прижата к внутреннему краю своей колонки → щель ровно по центру (под кубом) */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-12 max-w-2xl mx-auto relative z-10">
+        <button type="button" data-quiz-open class="cta-primary justify-self-center sm:justify-self-end inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-white font-semibold text-base cursor-pointer">
+          Рассчитать стоимость
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#video" class="justify-self-center sm:justify-self-start inline-flex items-center justify-center gap-2 px-6 py-4 rounded-lg text-white font-medium border transition" style="border-color: rgba(125,168,255,0.3);">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l8 5-8 5V3z"/></svg>
+          Видео о программе
+        </a>
+      </div>
+
+      {/* 6 пиктограмм-преимуществ — ЕГИСЗ главный, лаб+кассы вместе, доработки отдельно */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-16 text-left">
+        {heroFeatures.map((f) => (
+          <div
+            class={`rounded-xl border p-4 backdrop-blur-sm transition ${f.primary ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+            style={f.primary
+              ? 'background: linear-gradient(135deg, rgba(33,103,224,0.22), rgba(125,168,255,0.10)); border-color: rgba(125,168,255,0.45); box-shadow: 0 0 0 1px rgba(125,168,255,0.18) inset;'
+              : 'background: rgba(255,255,255,0.04); border-color: rgba(125,168,255,0.18);'}
+          >
+            {f.primary && (
+              <span class="mono text-[10px] uppercase tracking-wider mb-2 inline-block" style="color: var(--brand-light);">Главное</span>
+            )}
+            <h3 class="text-white font-semibold text-[15px] mb-2">{f.title}</h3>
+            <p class="text-sm leading-snug" style="color: rgba(255,255,255,0.92);">{f.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ LOGOS MARQUEE — paper-2 ════════ */}
+  <section class="py-12 sm:py-12" style="background: var(--paper-2); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <p class="text-center label mb-8" style="color: var(--muted);">
+        «ЕС-Профосмотр» используют клиники по&nbsp;всей России
+      </p>
+      <div class="marquee" id="logoMarquee">
+        <button class="marquee__btn marquee__btn--prev" aria-label="Назад" data-dir="-1">‹</button>
+        <button class="marquee__btn marquee__btn--next" aria-label="Вперёд" data-dir="1">›</button>
+        <div class="marquee__track" id="logoTrack">
+          <div class="marquee__group">
+            {logos.map((name) => (
+              <span class="font-bold text-xl whitespace-nowrap transition" style="color: var(--muted);">{name}</span>
+            ))}
+          </div>
+          <div class="marquee__group" aria-hidden="true">
+            {logos.map((name) => (
+              <span class="font-bold text-xl whitespace-nowrap" style="color: var(--muted);">{name}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ PRODUCTS — paper, editorial chapter head ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" id="products" style="background: var(--paper); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="grid grid-cols-[80px_1fr] gap-6 mb-12 pb-6 items-start" style="border-bottom: 1px solid var(--brand-dark);">
+        <div class="w-16 h-16 flex items-center justify-center border" style="background: var(--surface); border-color: var(--hair-blue); padding: 6px;">
+          <IsoCube shape="hex" size="sm" mode="draw" tone="brand" />
+        </div>
+        <div class="max-w-3xl">
+          <span class="label block mb-3" style="color: var(--brand-dark);">§ 02 · ЭПИСМЕДИА</span>
+          <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-2 leading-[1.05]" style="color: var(--ink);">
+            МИС для&nbsp;профосмотров
+            <span class="block" style="color: var(--brand-mid);">и&nbsp;МИС для&nbsp;амбулаторного приёма</span>
+          </h2>
+          <p class="text-base mt-4" style="color: var(--muted);">
+            Два собственных продукта одной команды. Закрывают полный цикл работы медцентра — от&nbsp;регистратуры и&nbsp;приёма до&nbsp;передачи СЭМД в&nbsp;ЕГИСЗ.
+          </p>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {products.map((p) => (
+          <article id={p.key === 'es' ? 'es-profosmotr' : undefined} class="rounded-2xl border p-8 transition flex flex-col" style="background: var(--surface); border-color: var(--hair-blue);">
+            <div class="flex items-center justify-between gap-3 mb-6">
+              <span class="label" style="color: var(--brand-dark);">{p.role}</span>
+              <span class="mono text-[13px] font-semibold px-4 py-2 rounded-md inline-flex items-center gap-2 whitespace-nowrap" style="background: var(--paper-2); color: var(--brand-dark); border: 1px solid var(--hair-blue);">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Минцифры {p.registry}
+              </span>
+            </div>
+            <h3 class="display text-3xl mb-3" style="color: var(--ink);">{p.name}</h3>
+            <p class="leading-relaxed mb-6" style="color: var(--muted);">{p.text}</p>
+            <div class="mt-auto">
+              <h4 class="label mb-3" style="color: var(--ink);">{p.headline}</h4>
+              <ul class="space-y-2 mb-6">
+                {p.bullets.map((b) => (
+                  <li class="flex gap-2 text-[14px]" style="color: var(--ink-2);">
+                    <span class="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style="background: var(--brand-mid);"></span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={p.cta.href}
+                target={p.cta.external ? '_blank' : null}
+                rel={p.cta.external ? 'noopener' : null}
+                class="inline-flex items-center gap-2 font-semibold text-sm transition-all hover:gap-2"
+                style="color: var(--brand-dark);"
+              >
+                {p.cta.label}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ INTEGRATIONS — dark brand-deep, light text ════════ */}
+  <section class="py-16 sm:py-20 md:py-24 text-white relative overflow-hidden" id="integrations" style="background: var(--brand-gradient-deep);">
+    <div class="bg-iso absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true" style="-webkit-mask-image: radial-gradient(ellipse at center, black, transparent 80%); mask-image: radial-gradient(ellipse at center, black, transparent 80%);"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="grid grid-cols-[80px_1fr] gap-6 mb-12 pb-6 items-start" style="border-bottom: 1px solid rgba(125,168,255,0.25);">
+        <div class="w-16 h-16 flex items-center justify-center border p-2" style="background: rgba(255,255,255,0.04); border-color: rgba(125,168,255,0.25);">
+          <IsoCube shape="hex" size="sm" mode="draw" tone="light" />
+        </div>
+        <div class="max-w-3xl">
+          <span class="label block mb-3" style="color: var(--brand-light);">§ 03 · Интеграции</span>
+          <h2 class="display text-3xl sm:text-4xl md:text-5xl text-white mb-4">ЕГИСЗ, лаборатории, кассы</h2>
+          <p style="color: rgba(255,255,255,0.92);">
+            Передача данных в&nbsp;ЕГИСЗ, обмен с&nbsp;лабораториями и&nbsp;приём оплат — встроены в&nbsp;систему напрямую, без сторонних модулей и&nbsp;дополнительных программ.
+          </p>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {integrations.map((it, idx) => (
+          <article class="rounded-2xl border p-8 backdrop-blur-sm transition flex flex-col" style="background: rgba(255,255,255,0.07); border-color: rgba(125,168,255,0.32);">
+            <span class="mono text-[11px] font-bold tracking-wider mb-3" style="color: var(--brand-light);">
+              {String(idx + 1).padStart(2, '0')} / 03
+            </span>
+            <h3 class="display text-xl text-white mb-3">{it.title}</h3>
+            <p class="text-[15px] leading-relaxed mb-6" style="color: #E5EDFA;">{it.text}</p>
+            <div class="mt-auto pt-6" style="border-top: 1px solid rgba(125,168,255,0.18);">
+              <h4 class="label mb-4" style="color: #B8CFFF;">{it.listTitle}</h4>
+              <ul class="mb-6">
+                {it.items.map((row) => (
+                  <li class="grid grid-cols-[auto_1fr] items-center gap-x-4 py-2 border-b last:border-b-0" style="border-color: rgba(125,168,255,0.1);">
+                    <span class="mono text-[11px] font-bold tracking-wider whitespace-nowrap inline-flex items-center justify-center px-2 py-1 rounded-md" style="background: rgba(125,168,255,0.18); color: #fff; border: 1px solid rgba(125,168,255,0.4); min-width: 44px; min-height: 24px;">
+                      {row.tag}
+                    </span>
+                    <span class="text-[13.5px] leading-snug" style="color: rgba(234,241,254,0.78);">{row.name}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href="#contact" class="inline-flex items-center gap-2 font-semibold text-sm transition hover:gap-2" style="color: var(--brand-light);">
+                {it.cta}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ ROLES — paper-3, 4 cards ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" id="roles" style="background: var(--paper-3); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="grid grid-cols-[80px_1fr] gap-6 mb-12 pb-6 items-start" style="border-bottom: 1px solid var(--brand-dark);">
+        <div class="w-16 h-16 flex items-center justify-center border p-2" style="background: var(--surface); border-color: var(--hair-blue);">
+          <IsoCube shape="hex" size="sm" mode="draw" tone="brand" />
+        </div>
+        <div class="max-w-3xl">
+          <span class="label block mb-3" style="color: var(--brand-dark);">§ 04 · Функционал</span>
+          <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-4" style="color: var(--ink);">
+            Готовый набор инструментов для&nbsp;каждой роли в&nbsp;медорганизации
+          </h2>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {roles.map((r) => (
+          <article class="rounded-2xl border p-6 transition flex flex-col" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="label mb-2" style="color: var(--brand-dark);">Роль</span>
+            <h3 class="display text-xl mb-2" style="color: var(--ink);">{r.name}</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color: var(--muted);">{r.text}</p>
+            <ul class="space-y-2 text-sm mt-auto mb-6" style="color: var(--ink-2);">
+              {r.items.map((it) => (
+                <li class="flex gap-2"><span style="color: var(--brand-mid);">−</span><span>{it}</span></li>
+              ))}
+            </ul>
+            <a href="#contact" class="inline-flex items-center gap-1 font-semibold text-sm hover:gap-2 transition-all" style="color: var(--brand-dark);">
+              Подробнее →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ STATS — dark brand-deep ════════ */}
+  <section class="py-16 sm:py-20 md:py-24 text-white relative overflow-hidden" id="about" style="background: var(--brand-gradient-deep);">
+    <div class="bg-dots-dark absolute inset-0 opacity-50 pointer-events-none" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="max-w-3xl mx-auto text-center mb-12">
+        <span class="label block mb-3" style="color: var(--brand-light);">§ 05 · О компании</span>
+        <h2 class="display text-3xl sm:text-4xl md:text-5xl text-white mb-4">«ЕС-Профосмотр» в&nbsp;цифрах</h2>
+        <p style="color: rgba(255,255,255,0.88);">
+          Решение работает в&nbsp;частных, сетевых и&nbsp;государственных клиниках по&nbsp;всей России.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {[
+          { big: '540+',     small: 'медцентров работают с нами' },
+          { big: '15+ лет',  small: 'опыт разработки медицинского ПО' },
+          { big: '5+ млн',   small: 'СЭМД переданы в РЭМД ЕГИСЗ' },
+        ].map((s) => (
+          <div class="text-center">
+            <div class="display text-5xl sm:text-6xl tnum mb-2 bg-clip-text text-transparent" style="background-image: linear-gradient(180deg, #fff 0%, var(--brand-light) 100%);">{s.big}</div>
+            <p class="text-sm" style="color: rgba(255,255,255,0.88);">{s.small}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-12 text-center text-sm max-w-3xl mx-auto" style="color: rgba(255,255,255,0.92);">
+        Аккредитованная IT-компания · включены в&nbsp;Единый реестр российских программ Минцифры (№13348, №17473) · работаем с&nbsp;крупными государственными клиниками
+      </p>
+    </div>
+  </section>
+
+  {/* ════════ EXTRAS — paper-2 ════════ */}
+  <section class="py-16 sm:py-20" style="background: var(--paper-2); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="grid grid-cols-[80px_1fr] gap-6 mb-12 pb-6 items-start" style="border-bottom: 1px solid var(--brand-dark);">
+        <div class="w-16 h-16 flex items-center justify-center border p-2" style="background: var(--surface); border-color: var(--hair-blue);">
+          <IsoCube shape="hex" size="sm" mode="draw" tone="brand" />
+        </div>
+        <div class="max-w-3xl">
+          <span class="label block mb-3" style="color: var(--brand-dark);">§ 06 · Дополнительно</span>
+          <h2 class="display text-3xl sm:text-4xl" style="color: var(--ink);">Дополнительные услуги</h2>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {extras.map((e) => (
+          <a href={e.href} class="rounded-2xl border p-6 transition group flex flex-col" style="background: var(--surface); border-color: var(--hair-blue);">
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{e.name}</h3>
+            <p class="text-sm leading-relaxed mb-6 flex-1" style="color: var(--muted);">{e.text}</p>
+            <span class="font-semibold text-sm inline-flex items-center gap-2 group-hover:gap-2 transition-all" style="color: var(--brand-dark);">
+              Подробнее →
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ FAQ — paper ════════ */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <header class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-14 h-14 border p-2 mb-4 mx-auto" style="background: var(--surface); border-color: var(--hair-blue);">
+          <IsoCube shape="hex" size="sm" mode="draw" tone="brand" />
+        </div>
+        <span class="label block mb-3" style="color: var(--brand-dark);">§ 07 · FAQ</span>
+        <h2 class="display text-3xl sm:text-4xl md:text-5xl mb-3" style="color: var(--ink);">Частые вопросы</h2>
+        <p style="color: var(--muted);">Что важно знать перед подключением</p>
+      </header>
+      <div class="space-y-3">
+        {faq.map((item, i) => (
+          <details class="faq rounded-xl border transition" style="background: var(--surface); border-color: var(--hair-blue);" open={i === 0}>
+            <summary class="flex items-center justify-between gap-4 px-6 py-4 font-semibold" style="color: var(--ink);">
+              <span>{item.q}</span>
+              <svg class="chev w-5 h-5 flex-shrink-0" viewBox="0 0 20 20" fill="none" style="color: var(--brand-dark);">
+                <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 pt-1 leading-relaxed" style="color: var(--muted);">
+              {item.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ SUPPORT INFO — компактный блок с кнопкой «Позвонить» ════════ */}
+  <section class="py-12 sm:py-16" style="background: var(--paper-2); border-bottom: 1px solid var(--brand-dark);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl border p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-center" style="background: var(--surface); border-color: var(--hair-blue);">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block w-2 h-2 rounded-full" style="background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+            <span class="label" style="color: var(--brand-dark);">Поддержка работает · 08:00–17:00 МСК</span>
+          </div>
+          <h3 class="display text-2xl sm:text-3xl mb-2" style="color: var(--ink);">Нужна помощь? Звоните напрямую.</h3>
+          <p class="text-sm leading-relaxed max-w-xl" style="color: var(--muted);">
+            Реальный человек поддержки — не&nbsp;бот. Среднее время первого ответа в&nbsp;рабочее время&nbsp;— 4&nbsp;минуты. Подскажем по&nbsp;тарифам, интеграциям, передаче СЭМД.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-stretch">
+          <a href="tel:88006001318" class="cta-primary inline-flex items-center justify-center gap-2 px-6 py-4 rounded-lg text-white font-semibold whitespace-nowrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="flex flex-col items-start leading-tight">
+              <span class="text-[11px] font-normal opacity-80">Позвонить в поддержку</span>
+              <span class="text-lg tracking-wide">8 (800) 600-13-18</span>
+            </span>
+          </a>
+          <a href="mailto:help@apismedia.pro" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border font-medium text-sm hover:bg-white transition" style="border-color: var(--hair-blue); color: var(--brand-dark);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.8"/></svg>
+            help@apismedia.pro
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ FINAL CTA — dark brand-deep ════════ */}
+  <section class="py-16 sm:py-20 md:py-24 text-white relative overflow-hidden" id="contact" style="background: var(--brand-gradient-deep);">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="blob-a absolute -top-32 right-1/3 w-96 h-96 rounded-full" style="background: radial-gradient(circle, rgba(125,168,255,0.3), transparent 70%); filter: blur(80px);"></div>
+    </div>
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <span class="label block mb-4" style="color: var(--brand-light);">§ 08 · «ЕС-ПРОФОСМОТР»</span>
+      <h2 class="display text-white mb-6" style="font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.05;">
+        Готовы автоматизировать профосмотры?
+      </h2>
+      <p class="text-lg mb-8 max-w-2xl mx-auto" style="color: rgba(255,255,255,0.88);">
+        Получите расчёт под&nbsp;вашу клинику за&nbsp;5&nbsp;минут. Расскажем про&nbsp;модули, тарифы, сроки подключения.
+      </p>
+      <a href="tel:88006001318" class="cta-primary inline-flex items-center gap-2 px-8 py-4 rounded-lg text-white font-semibold text-base mb-8">
+        Получить расчёт
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
+        <a href="tel:88006001318" class="transition" style="color: rgba(255,255,255,0.92);">
+          <span style="color: var(--brand-light);">☎</span> 8 (800) 600-13-18
+        </a>
+        <a href="mailto:sales@apismedia.pro" class="transition" style="color: rgba(255,255,255,0.92);">
+          <span style="color: var(--brand-light);">@</span> sales@apismedia.pro
+        </a>
+        <a href="tel:88125096486" class="transition" style="color: rgba(255,255,255,0.92);">
+          <span style="color: var(--brand-light);">☎</span> 8 (812) 509-64-86
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ════════ QUIZ MODAL — открывается с кнопки «Рассчитать стоимость» ════════ */}
+  <div id="quiz-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="quiz-title" aria-describedby="quiz-desc">
+    {/* Подложка */}
+    <div data-quiz-close class="absolute inset-0" style="background: rgba(6,13,27,0.78); backdrop-filter: blur(6px);" aria-hidden="true"></div>
+
+    {/* Карточка */}
+    <div class="relative w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden" style="background: var(--surface); border: 1px solid var(--brand-dark); max-height: 92vh; overflow-y: auto;">
+      {/* Шапка модала */}
+      <div class="px-6 sm:px-8 py-6 flex items-center justify-between" style="background: var(--brand-gradient-deep); color: #fff;">
+        <div>
+          <span class="label" style="color: var(--brand-light);">§ Расчёт под вашу клинику</span>
+          <h2 id="quiz-title" class="display text-2xl sm:text-3xl mt-1">Рассчитать стоимость</h2>
+          <p id="quiz-desc" class="text-sm mt-2" style="color: rgba(255,255,255,0.85);">3 шага — рабочие места, интеграции, контакты. Ответим в течение 30 минут.</p>
+        </div>
+        <button data-quiz-close type="button" class="w-9 h-9 rounded-lg flex items-center justify-center transition flex-shrink-0 ml-3" style="background: rgba(255,255,255,0.08); color: #fff;" aria-label="Закрыть окно расчёта">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <form id="quiz-form" class="p-6 sm:p-8 space-y-6">
+        {/* Шаг 1: Сколько рабочих мест */}
+        <div>
+          <label class="label block mb-3" style="color: var(--brand-dark);">1. Сколько рабочих мест?</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {['1–3', '5–7', '9–15', 'от 15'].map((opt) => (
+              <label class="quiz-opt cursor-pointer">
+                <input type="radio" name="seats" value={opt} class="sr-only peer" />
+                <span class="block text-center py-3 px-3 rounded-lg border font-semibold text-sm transition peer-checked:text-white" style="background: var(--paper); border-color: var(--hair-blue); color: var(--ink);">{opt}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Шаг 2: Какие интеграции нужны */}
+        <div>
+          <label class="label block mb-3" style="color: var(--brand-dark);">2. Какие интеграции нужны?</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {[
+              { v: 'egisz', l: 'ЕГИСЗ', d: 'Передача СЭМД' },
+              { v: 'lab',   l: 'Лаборатории', d: 'ИНВИТРО, Хеликс, КДЛ' },
+              { v: 'cash',  l: 'Кассы', d: '54-ФЗ, эквайринг' },
+            ].map((opt) => (
+              <label class="quiz-opt cursor-pointer">
+                <input type="checkbox" name="integrations" value={opt.v} class="sr-only peer" />
+                <span class="block py-3 px-4 rounded-lg border transition peer-checked:bg-[var(--brand-dark)] peer-checked:text-white peer-checked:border-[var(--brand-dark)]" style="background: var(--paper); border-color: var(--hair-blue); color: var(--ink);">
+                  <span class="block text-sm font-semibold">{opt.l}</span>
+                  <span class="block text-xs mt-0.5 opacity-70">{opt.d}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Шаг 3: Контакты */}
+        <div>
+          <label class="label block mb-3" style="color: var(--brand-dark);">3. Куда отправить расчёт?</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <input required type="text"  name="name"  placeholder="Имя"      class="px-4 py-3 rounded-lg border outline-none transition focus:border-[var(--brand-dark)]" style="background: var(--paper); border-color: var(--hair-blue); color: var(--ink);" />
+            <input required type="tel"   name="phone" placeholder="Телефон"  class="px-4 py-3 rounded-lg border outline-none transition focus:border-[var(--brand-dark)]" style="background: var(--paper); border-color: var(--hair-blue); color: var(--ink);" />
+            <input required type="email" name="email" placeholder="Email"    class="px-4 py-3 rounded-lg border outline-none transition focus:border-[var(--brand-dark)]" style="background: var(--paper); border-color: var(--hair-blue); color: var(--ink);" />
+          </div>
+        </div>
+
+        <button id="quiz-submit" type="submit" class="cta-primary w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-lg text-white font-semibold text-[15px]">
+          <span data-submit-label>Получить расчёт</span>
+          <svg data-submit-icon width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg data-submit-spinner width="16" height="16" viewBox="0 0 16 16" fill="none" class="hidden animate-spin" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" stroke-opacity="0.3"/><path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <p class="text-xs text-center" style="color: var(--muted);">Ответим в&nbsp;течение 30&nbsp;минут в&nbsp;рабочее время. Без спама.</p>
+      </form>
+    </div>
+  </div>
+
+  {/* Toast — обратная связь после отправки формы */}
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  {/* Подсветка выбранного варианта квиза */}
+  <style is:global>
+    .quiz-opt input:checked + span {
+      background: var(--brand-dark) !important;
+      border-color: var(--brand-dark) !important;
+      color: #fff !important;
+    }
+    #quiz-modal.is-open { display: flex !important; }
+    body.no-scroll { overflow: hidden; }
+  </style>
+
+  <script is:inline>
+    (() => {
+      const wrap = document.getElementById('logoMarquee');
+      const track = document.getElementById('logoTrack');
+      if (!wrap || !track) return;
+      let offset = 0;
+      const step = 320;
+      const max = track.scrollWidth / 2;
+      wrap.querySelectorAll('[data-dir]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dir = parseInt(btn.getAttribute('data-dir') || '0', 10);
+          offset += dir * step;
+          if (offset < -max) offset += max;
+          if (offset > 0) offset -= max;
+          track.style.transform = `translateX(${offset}px)`;
+        });
+      });
+      let auto;
+      const drift = () => { offset -= 0.4; if (offset < -max) offset += max; track.style.transform = `translateX(${offset}px)`; auto = requestAnimationFrame(drift); };
+      drift();
+      wrap.addEventListener('mouseenter', () => cancelAnimationFrame(auto));
+      wrap.addEventListener('mouseleave', () => drift());
+    })();
+
+    // ─── Toast ───
+    const showToast = (msg, isError) => {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.toggle('toast--error', !!isError);
+      t.classList.add('toast--show');
+      clearTimeout(t._hideTimer);
+      t._hideTimer = setTimeout(() => t.classList.remove('toast--show'), 4000);
+    };
+
+    // ─── Квиз-модал с focus trap, Escape, return focus, loading state ───
+    (() => {
+      const modal = document.getElementById('quiz-modal');
+      const form  = document.getElementById('quiz-form');
+      if (!modal || !form) return;
+
+      const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      let lastTrigger = null;
+
+      const getFocusable = () => Array.from(modal.querySelectorAll(FOCUSABLE)).filter(el => el.offsetParent !== null);
+
+      const open = (e) => {
+        lastTrigger = e?.currentTarget || document.activeElement;
+        modal.classList.add('is-open');
+        document.body.classList.add('no-scroll');
+        // Фокус на первый интерактивный элемент
+        setTimeout(() => {
+          const first = getFocusable()[0];
+          if (first) first.focus();
+        }, 50);
+      };
+      const close = () => {
+        modal.classList.remove('is-open');
+        document.body.classList.remove('no-scroll');
+        // Возвращаем фокус на триггер (если жив)
+        if (lastTrigger && document.body.contains(lastTrigger)) lastTrigger.focus();
+      };
+
+      document.querySelectorAll('[data-quiz-open]').forEach(b => b.addEventListener('click', open));
+      document.querySelectorAll('[data-quiz-close]').forEach(b => b.addEventListener('click', close));
+
+      // Focus trap + Escape — только когда модал открыт
+      modal.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+        if (e.key !== 'Tab') return;
+        const focusable = getFocusable();
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last  = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+
+      // Custom validation messages (русский)
+      form.querySelectorAll('input[required]').forEach((input) => {
+        input.addEventListener('invalid', () => {
+          if (input.validity.valueMissing) input.setCustomValidity('Заполните это поле.');
+          else if (input.validity.typeMismatch && input.type === 'email') input.setCustomValidity('Введите корректный email, например ivan@clinic.ru');
+          else if (input.validity.typeMismatch && input.type === 'tel') input.setCustomValidity('Введите номер телефона.');
+          else input.setCustomValidity('');
+        });
+        input.addEventListener('input', () => input.setCustomValidity(''));
+      });
+
+      // Submit — loading state + toast
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('quiz-submit');
+        const label = btn.querySelector('[data-submit-label]');
+        const icon = btn.querySelector('[data-submit-icon]');
+        const spinner = btn.querySelector('[data-submit-spinner]');
+        btn.setAttribute('aria-busy', 'true');
+        btn.disabled = true;
+        label.textContent = 'Отправляем…';
+        icon.classList.add('hidden');
+        spinner.classList.remove('hidden');
+
+        const fd = new FormData(form);
+        const data = Object.fromEntries(fd.entries());
+        data.integrations = fd.getAll('integrations');
+        console.log('[quiz]', data);
+
+        // Симуляция запроса (заменить на fetch к бэкенду)
+        setTimeout(() => {
+          btn.setAttribute('aria-busy', 'false');
+          btn.disabled = false;
+          label.textContent = 'Получить расчёт';
+          icon.classList.remove('hidden');
+          spinner.classList.add('hidden');
+          form.reset();
+          close();
+          showToast('Спасибо! Перезвоним в течение 30 минут.');
+        }, 700);
+      });
+    })();
+  </script>
+
+</BaseLayout>

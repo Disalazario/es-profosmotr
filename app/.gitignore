@@ -1,0 +1,24 @@
+# Astro
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.production
+
+# IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log

@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ChapterHead from '../components/ChapterHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const features = [
+  { title: 'Проверка кодов',     text: 'Сканирование Data Matrix в момент приёма. Сверка с ГИС МТ. Подсветка повторов и подозрительных партий.' },
+  { title: 'Массовое списание',  text: 'Списываем пачки по требованию или после процедуры. Без поштучного ввода — батч-операции.' },
+  { title: 'Выравнивание остатков', text: 'Сверка фактических остатков с балансом в ГИС МТ. Автоматическое выравнивание расхождений.' },
+  { title: 'Ввод в оборот',       text: 'Регистрация полученных партий в Госмониторинге. Электронная подпись операций.' },
+  { title: 'Выбытие',             text: 'Чек ККМ с кодом маркировки. Списание по процедуре. Возврат поставщику. Уничтожение.' },
+  { title: 'Журнал операций',     text: 'Полная история по каждой упаковке: кто, когда, что сделал. Готово для проверки.' },
+];
+---
+<BaseLayout title="Программа «Честный знак» — маркировка ЛС | APIS Media">
+
+  <PageHero
+    crumbs={[{ label: 'Главная', href: '/' }, { label: 'Услуги', href: '/#services' }, { label: 'Честный знак' }]}
+    kicker="§ 01 · Программа · Маркировка"
+    title='Программа <em class="not-italic" style="color: var(--brand-light);">«Честный знак»</em> — маркировка препаратов'
+    dek="Быстрая проверка кодов маркировки, массовое списание, выравнивание остатков. Готово для требований ГИС «Маркировка товаров»."
+    badges={[
+      { label: 'Совместимо с ГИС МТ' },
+      { label: 'УКЭП', tone: 'muted' },
+      { label: 'Data Matrix', tone: 'muted' },
+    ]}
+  />
+
+  {/* §02 Что делает */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper);">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead
+        kicker="§ 02 · Возможности"
+        title="Шесть основных операций"
+        dek="Закрываем всё, что требует ГИС МТ для маркированных лекарственных препаратов."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {features.map((w, i) => (
+          <article class="rounded-2xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <span class="mono text-xs font-semibold mb-3 inline-block" style="color: var(--brand-dark);">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display text-lg mb-2" style="color: var(--ink);">{w.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* §03 Зачем нужно */}
+  <section class="py-16 sm:py-20 md:py-24" style="background: var(--paper-2);">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <ChapterHead kicker="§ 03 · Зачем" title="Что даёт автоматизация маркировки" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          { t: 'Скорость операций',  d: 'Сканер вместо ручного ввода. Массовые операции вместо поштучных. Время на оборот сокращается в 5–10 раз.' },
+          { t: 'Без штрафов',         d: 'Ошибки в ГИС МТ — штраф до 100 000 ₽ по ст. 15.12 КоАП. Валидация на нашей стороне ловит ошибки до отправки.' },
+          { t: 'Прозрачность',        d: 'Полный журнал движений каждой упаковки. По требованию проверки — выгрузка одной кнопкой.' },
+          { t: 'Интеграция',          d: 'Связка с МДЛП и кассой ККМ. Маркированный товар проходит через всю систему без ручных переносов.' },
+        ].map((c) => (
+          <div class="rounded-xl border p-6" style="background: var(--surface); border-color: var(--hair-blue);">
+            <h4 class="display text-lg mb-2" style="color: var(--ink);">{c.t}</h4>
+            <p class="text-sm leading-relaxed" style="color: var(--muted);">{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    kicker="§ 04 · Подключение"
+    title="Готовы начать?"
+    dek="Подключим к ГИС МТ, настроим сканеры, обучим персонал. Один-два дня — и вы соответствуете требованиям."
+    ctaLabel="Запросить расчёт"
+  />
+</BaseLayout>

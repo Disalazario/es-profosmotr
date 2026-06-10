@@ -1,0 +1,200 @@
+/* ════════════════════════════════════════════════════════════
+   APIS Media — Isometric Cube — Standalone CSS
+   ════════════════════════════════════════════════════════════
+   Без зависимостей. Подключается одним <link rel="stylesheet">.
+   Markup см. в cube.html.
+
+   Палитра — из бренд-бука APIS Media (2017):
+     #0542AC (dark) · #2167E0 (mid) · #7DA8FF (light)
+   ════════════════════════════════════════════════════════════ */
+
+:root {
+  --blue-50:  #F0F5FF;
+  --blue-100: #DCE7FF;
+  --blue-200: #B8CFFF;
+  --blue-300: #7DA8FF;   /* brand-light */
+  --blue-400: #4A86F0;
+  --blue-500: #2167E0;   /* brand-mid */
+  --blue-600: #0542AC;   /* brand-dark */
+  --blue-700: #0B1A3A;
+  --blue-800: #060D1B;
+
+  --cube-xs:  24px;
+  --cube-sm:  48px;
+  --cube-md:  96px;
+  --cube-lg: 200px;
+  --cube-xl: 400px;
+}
+
+/* ─── обёртка ─── */
+.iso { display: inline-block; line-height: 0; }
+.iso svg { width: 100%; height: 100%; overflow: visible; }
+
+/* ─── размеры ─── */
+.iso--xs { width: var(--cube-xs); height: var(--cube-xs); }
+.iso--sm { width: var(--cube-sm); height: var(--cube-sm); }
+.iso--md { width: var(--cube-md); height: var(--cube-md); }
+.iso--lg { width: var(--cube-lg); height: var(--cube-lg); }
+.iso--xl { width: var(--cube-xl); height: var(--cube-xl); }
+
+/* ─── группа: вращение строго вокруг собственного центра ─── */
+.iso__group { transform-box: fill-box; transform-origin: center; }
+
+/* ─── рёбра ─── */
+.iso__edge {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.iso__edge--outer { stroke: var(--blue-600); stroke-width: 4; }
+.iso__edge--inner { stroke: var(--blue-300); stroke-width: 3; }
+
+.iso--xs .iso__edge { stroke-width: 6; }
+.iso--sm .iso__edge { stroke-width: 5; }
+
+/* ─── вершины ─── */
+.iso__vert        { fill: var(--blue-600); r: 4.5; }
+.iso__vert--center{ fill: var(--blue-300); r: 4.5; }
+.iso--xs .iso__vert,
+.iso--xs .iso__vert--center { r: 7; }
+.iso--sm .iso__vert,
+.iso--sm .iso__vert--center { r: 6; }
+
+/* ─── грани (под линиями) ─── */
+.iso__face {
+  stroke: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.iso--static .iso__face { opacity: 1; }
+.iso--draw   .iso__face,
+.iso--orbit  .iso__face {
+  animation: iso-face-in 0.9s ease 1.4s forwards;
+}
+@keyframes iso-face-in { to { opacity: 1; } }
+
+/* ─── ТОНА ─── */
+.iso--light  .iso__edge--outer { stroke: var(--blue-300); }
+.iso--light  .iso__edge--inner { stroke: var(--blue-500); }
+.iso--light  .iso__vert        { fill:  var(--blue-300); }
+.iso--light  .iso__vert--center{ fill:  var(--blue-500); }
+.iso--light  .iso__face        { mix-blend-mode: screen; }
+
+.iso--dark   .iso__edge--outer { stroke: var(--blue-800); }
+.iso--dark   .iso__edge--inner { stroke: var(--blue-500); }
+.iso--dark   .iso__vert        { fill:  var(--blue-800); }
+.iso--dark   .iso__vert--center{ fill:  var(--blue-500); }
+
+.iso--mono   .iso__edge--outer,
+.iso--mono   .iso__edge--inner { stroke: currentColor; }
+.iso--mono   .iso__vert,
+.iso--mono   .iso__vert--center{ fill:  currentColor; }
+.iso--mono   .iso__face        { display: none; }
+
+/* ─── STATIC: сразу нарисован ─── */
+.iso--static .iso__edge { stroke-dasharray: none; stroke-dashoffset: 0; }
+.iso--static .iso__vert,
+.iso--static .iso__vert--center { r: 4.5; }
+
+/* ─── DRAW + ORBIT: сборка по линиям ─── */
+.iso--draw  .iso__edge,
+.iso--orbit .iso__edge {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: iso-draw 1.2s cubic-bezier(.65,0,.35,1) forwards;
+}
+.iso--draw .iso__edge--1, .iso--orbit .iso__edge--1 { animation-delay:    0ms; }
+.iso--draw .iso__edge--2, .iso--orbit .iso__edge--2 { animation-delay:   80ms; }
+.iso--draw .iso__edge--3, .iso--orbit .iso__edge--3 { animation-delay:  160ms; }
+.iso--draw .iso__edge--4, .iso--orbit .iso__edge--4 { animation-delay:  240ms; }
+.iso--draw .iso__edge--5, .iso--orbit .iso__edge--5 { animation-delay:  320ms; }
+.iso--draw .iso__edge--6, .iso--orbit .iso__edge--6 { animation-delay:  400ms; }
+.iso--draw .iso__edge--7, .iso--orbit .iso__edge--7 { animation-delay:  540ms; }
+.iso--draw .iso__edge--8, .iso--orbit .iso__edge--8 { animation-delay:  620ms; }
+.iso--draw .iso__edge--9, .iso--orbit .iso__edge--9 { animation-delay:  700ms; }
+
+.iso--draw  .iso__vert,
+.iso--orbit .iso__vert {
+  r: 0;
+  animation: iso-pop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+  animation-delay: 900ms;
+}
+.iso--draw .iso__vert--2, .iso--orbit .iso__vert--2 { animation-delay:  950ms; }
+.iso--draw .iso__vert--3, .iso--orbit .iso__vert--3 { animation-delay: 1000ms; }
+.iso--draw .iso__vert--4, .iso--orbit .iso__vert--4 { animation-delay: 1050ms; }
+.iso--draw .iso__vert--5, .iso--orbit .iso__vert--5 { animation-delay: 1100ms; }
+.iso--draw .iso__vert--6, .iso--orbit .iso__vert--6 { animation-delay: 1150ms; }
+.iso--draw  .iso__vert--center,
+.iso--orbit .iso__vert--center {
+  r: 0;
+  animation: iso-pop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+  animation-delay: 1300ms;
+}
+@keyframes iso-draw { to { stroke-dashoffset: 0; } }
+@keyframes iso-pop {
+  0%   { r: 0; }
+  60%  { r: 6.5; }
+  100% { r: 4.5; }
+}
+
+/* ─── ORBIT: непрерывное вращение куба + орбитальные частицы ─── */
+.iso--orbit .iso__group {
+  animation: iso-spin 20s linear infinite;
+  animation-delay: 1900ms;
+}
+@keyframes iso-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.iso__orbit {
+  opacity: 0;
+  animation: iso-appear 0.8s ease 1700ms forwards;
+}
+.iso__particle {
+  fill: var(--blue-300);
+  filter: drop-shadow(0 0 5px var(--blue-300));
+}
+@keyframes iso-appear { to { opacity: 1; } }
+
+/* ─── SHAPE: cube (полный wireframe — 3 «задних» ребра пунктиром) ─── */
+.iso__edge--hidden {
+  fill: none;
+  stroke: var(--blue-300);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 5 5 !important;
+  opacity: 0.45;
+}
+
+/* ─── SHAPE: solid (сильные заливки + тонкие линии) ─── */
+.iso__face--solid { filter: brightness(1.25) saturate(1.15); }
+.iso__edge--solid { stroke-width: 2; }
+.iso__edge--seam  {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  mix-blend-mode: overlay;
+}
+
+/* ─── SHAPE: cluster (3 мини-куба) ─── */
+.iso__edge--cluster { stroke-width: 2.2; }
+.iso__vert--cluster { r: 2.5; }
+.iso__vert--center-cluster { r: 2.5; fill: var(--blue-500); }
+
+/* ─── prefers-reduced-motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .iso__edge {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+  .iso__vert, .iso__vert--center { r: 4.5; animation: none !important; }
+  .iso__group, .iso__orbit { animation: none !important; }
+  .iso__orbit { opacity: 1; }
+  .iso__face  { opacity: 1; animation: none !important; }
+}
